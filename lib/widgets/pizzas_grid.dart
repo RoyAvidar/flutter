@@ -6,6 +6,8 @@ import './pizza_item.dart';
 import '../providers/pizzas_provider.dart';
 
 class PizzasGrid extends StatelessWidget {
+  final _showOnlyFavorites;
+  PizzasGrid(this._showOnlyFavorites);
   @override
   Widget build(BuildContext context) {
     final pizzasData = Provider.of<Pizzas>(context);
