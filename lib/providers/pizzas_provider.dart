@@ -62,4 +62,8 @@ class Pizzas with ChangeNotifier {
   Pizza findById(String id) {
     return _items.firstWhere((pizz) => pizz.id == id);
   }
+
+  List<Pizza> get favoriteItems {
+    return _items.where((pizzaItem) => pizzaItem.isFavorite).toList();
+  }
 }

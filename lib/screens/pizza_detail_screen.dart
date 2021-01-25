@@ -17,6 +17,7 @@ class PizzaDetailScreen extends StatelessWidget {
       context,
       listen: false,
     ).findById(pizzaId);
+    final cart = Provider.of<Cart>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -83,10 +84,11 @@ class PizzaDetailScreen extends StatelessWidget {
                 SizedBox(width: 10),
                 RaisedButton(
                   onPressed: () {
-                    //sends us to the order screen
+                    cart.addItem(loadedPizza.id, loadedPizza.price,
+                        loadedPizza.title, loadedPizza.toppings);
                   },
                   child: Text(
-                    'Order Now',
+                    'Add To Cart',
                   ),
                 )
               ],

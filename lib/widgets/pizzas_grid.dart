@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 import './pizza_item.dart';
 import '../providers/pizzas_provider.dart';
 
 class PizzasGrid extends StatelessWidget {
-  final _showOnlyFavorites;
-  PizzasGrid(this._showOnlyFavorites);
+  final bool showFavs;
+  PizzasGrid(this.showFavs);
   @override
   Widget build(BuildContext context) {
     final pizzasData = Provider.of<Pizzas>(context);
-    final pizzas = pizzasData.items;
+    final pizzas = showFavs ? pizzasData.favoriteItems : pizzasData.items;
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: pizzas.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        create: (c) => pizzas[i],
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        value: pizzas[i],
         child: PizzaItem(
             // pizzas[i].id,
             // pizzas[i].title,
