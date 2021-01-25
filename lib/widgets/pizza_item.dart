@@ -49,7 +49,7 @@ class PizzaItem extends StatelessWidget {
                 pizza.id,
                 pizza.price,
                 pizza.title,
-                Topping.values,
+                pizza.toppings,
               );
               Scaffold.of(context).hideCurrentSnackBar();
               Scaffold.of(context).showSnackBar(SnackBar(

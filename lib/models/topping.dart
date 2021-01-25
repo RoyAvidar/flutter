@@ -9,8 +9,8 @@ class Topping {
 
 class Toppings extends ChangeNotifier {
   final peperoni = Topping('peperoni', 1);
-  final bazil = Topping('peperoni', 1);
-  final mushroom = Topping('peperoni', 1);
-  final onion = Topping('peperoni', 1);
-  final margherita = Topping('peperoni', 1);
+  final bazil = Topping('bazil', 1);
+  final mushroom = Topping('mushroom', 1);
+  final onion = Topping('onion', 1);
+  final margherita = Topping('margherita', 1);
 }

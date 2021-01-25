@@ -4,6 +4,7 @@ import '../providers/pizzas_provider.dart';
 import '../providers/cart.dart';
 import '../widgets/badge.dart';
 import '../screens/cart_screen.dart';
+import '../widgets/pizza_circle.dart';
 
 class PizzaEditScreen extends StatefulWidget {
   static const routeName = '/pizza-edit';
@@ -39,6 +40,7 @@ class _PizzaEditScreenState extends State<PizzaEditScreen> {
           ),
         ],
       ),
+      body: PizzaCircle(),
     );
   }
 }

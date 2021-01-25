@@ -12,7 +12,7 @@ class Pizzas with ChangeNotifier {
       price: 39.90,
       imageUrl:
           'https://townsquare.media/site/959/files/2020/08/GettyImages-1133727757.jpg',
-      toppings: [Topping.pepperoni],
+      toppings: [Toppings().peperoni],
     ),
     Pizza(
       id: 'p2',
@@ -22,7 +22,7 @@ class Pizzas with ChangeNotifier {
       price: 39.90,
       imageUrl:
           'https://cdn.loveandlemons.com/wp-content/uploads/2019/09/margherita-pizza-500x375.jpg',
-      toppings: [Topping.basil],
+      toppings: [Toppings().bazil],
     ),
     Pizza(
       id: 'p3',
@@ -32,7 +32,7 @@ class Pizzas with ChangeNotifier {
       price: 39.90,
       imageUrl:
           'https://i0.wp.com/www.crowdedkitchen.com/wp-content/uploads/2020/07/mushroom-pizza-vegan.jpg',
-      toppings: [Topping.mushroom],
+      toppings: [Toppings().mushroom],
     ),
     Pizza(
       id: 'p4',
@@ -42,7 +42,7 @@ class Pizzas with ChangeNotifier {
       price: 39.90,
       imageUrl:
           'https://realitybakes.com/wp-content/uploads/2020/01/Roasted-Red-Pepper-and-Red-Onion-Pizza-8.jpg',
-      toppings: [Topping.onion],
+      toppings: [Toppings().onion],
     ),
     Pizza(
       id: 'p5',
@@ -51,7 +51,7 @@ class Pizzas with ChangeNotifier {
           'izza Margherita is a typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella cheese, fresh basil, salt and extra-virgin olive oil.',
       price: 29.90,
       imageUrl: 'https://i.ytimg.com/vi/xKDnD8sJsuY/maxresdefault.jpg',
-      toppings: [Topping.margarita],
+      toppings: [Toppings().margherita],
     )
   ];
 
