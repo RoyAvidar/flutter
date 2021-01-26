@@ -22,6 +22,11 @@ class Pizza with ChangeNotifier {
     this.isFavorite = false,
   });
 
+  void _setFavValue(bool newValue) {
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
   Future<void> toggleFavorite() async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
@@ -29,15 +34,17 @@ class Pizza with ChangeNotifier {
     final url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizzas/$id.json';
     try {
-      await http.patch(
+      final response = await http.patch(
         url,
         body: json.encode({
           'isFavorite': isFavorite,
         }),
       );
+      if (response.statusCode >= 400) {
+        _setFavValue(oldStatus);
+      }
     } catch (error) {
-      isFavorite = oldStatus;
-      notifyListeners();
+      _setFavValue(oldStatus);
     }
   }
 }
