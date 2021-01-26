@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../models/topping.dart';
 
 class Pizza with ChangeNotifier {
@@ -20,8 +22,22 @@ class Pizza with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  void toggleFavorite() {
+  Future<void> toggleFavorite() async {
+    final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizzas/$id.json';
+    try {
+      await http.patch(
+        url,
+        body: json.encode({
+          'isFavorite': isFavorite,
+        }),
+      );
+    } catch (error) {
+      isFavorite = oldStatus;
+      notifyListeners();
+    }
   }
 }

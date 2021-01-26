@@ -63,8 +63,10 @@ class Orders with ChangeNotifier {
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders.json';
 
-    final response = await http.post(url,
-        body: json.encode({
+    final response = await http.post(
+      url,
+      body: json.encode(
+        {
           'amount': total,
           'date': timestamp.toIso8601String(),
           'products': cartProducts
@@ -79,8 +81,9 @@ class Orders with ChangeNotifier {
                     //       }),
                   })
               .toList(),
-        }));
-
+        },
+      ),
+    );
     _orders.insert(
         0,
         OrderItem(
@@ -89,7 +92,6 @@ class Orders with ChangeNotifier {
           dateTime: timestamp,
           products: cartProducts,
         ));
-
     notifyListeners();
   }
 }
