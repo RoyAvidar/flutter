@@ -60,6 +60,7 @@ class _OrderItemState extends State<OrderItem> {
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
+                          Text('${prod.toppings.map((t) => t.name).join(",")}')
                         ],
                       ),
                     )

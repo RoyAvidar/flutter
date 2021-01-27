@@ -6,6 +6,8 @@ import './screens/orders_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/pizza_overview_screen.dart';
 import './screens/pizza_detail_screen.dart';
+import './screens/admin_pizza_screen.dart';
+import './screens/admin_edit_pizzas_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
           PizzaEditScreen.routeName: (ctx) => PizzaEditScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          AdminPizzaScreen.routeName: (ctx) => AdminPizzaScreen(),
+          AdminEditPizzaScreen.routeName: (ctx) => AdminEditPizzaScreen(),
         },
       ),
     );

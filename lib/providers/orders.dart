@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza/models/topping.dart';
 import 'package:http/http.dart' as http; //avoid name clash
 
 import './cart.dart';
@@ -41,15 +42,15 @@ class Orders with ChangeNotifier {
           amount: orderData['amount'],
           dateTime: DateTime.parse(orderData['date']),
           products: (orderData['products'] as List<dynamic>)
-              .map(
-                (item) => CartItem(
-                  id: item['id'],
-                  price: item['price'],
-                  quantity: item['quantity'],
-                  title: item['title'],
-                  toppings: item['toppings'],
-                ),
-              )
+              .map((item) => CartItem(
+                    id: item['id'],
+                    price: item['price'],
+                    quantity: item['quantity'],
+                    title: item['title'],
+                    toppings: ((item['toppings']) as List<dynamic>)
+                        .map((t) => Topping(t['name'], t['price']))
+                        .toList(),
+                  ))
               .toList(),
         ),
       );
@@ -62,7 +63,6 @@ class Orders with ChangeNotifier {
     final timestamp = DateTime.now();
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders.json';
-    print(cartProducts[0].toppings);
 
     final response = await http.post(
       url,
