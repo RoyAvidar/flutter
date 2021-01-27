@@ -40,16 +40,15 @@ class Cart with ChangeNotifier {
       String pizzaId, double price, String title, List<Topping> toppings) {
     if (_items.containsKey(pizzaId)) {
       //cahnge quantity..
-      _items.update(
-        pizzaId,
-        (existingCartItem) => CartItem(
+      _items.update(pizzaId, (existingCartItem) {
+        return CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
           quantity: existingCartItem.quantity + 1,
           price: existingCartItem.price,
           toppings: existingCartItem.toppings,
-        ),
-      );
+        );
+      });
     } else {
       _items.putIfAbsent(
         pizzaId,
@@ -57,7 +56,7 @@ class Cart with ChangeNotifier {
           id: DateTime.now().toString(),
           price: price,
           title: title,
-          toppings: [],
+          toppings: toppings,
           quantity: 1,
         ),
       );

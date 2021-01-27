@@ -62,6 +62,7 @@ class Orders with ChangeNotifier {
     final timestamp = DateTime.now();
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders.json';
+    print(cartProducts[0].toppings);
 
     final response = await http.post(
       url,
@@ -75,10 +76,12 @@ class Orders with ChangeNotifier {
                     'title': cp.title,
                     'quantity': cp.quantity,
                     'price': cp.price,
-                    'toppings': cp.toppings //.map((pizzaTop) => {
-                    //'name': pizzaTop.name,
-                    //'price': pizzaTop.price,
-                    //       }),
+                    'toppings': cp.toppings
+                        .map((pizzaTop) => {
+                              'name': pizzaTop.name,
+                              'price': pizzaTop.price,
+                            })
+                        .toList(),
                   })
               .toList(),
         },

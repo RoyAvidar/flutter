@@ -82,7 +82,8 @@ class CartItem extends StatelessWidget {
               ),
             ),
             title: Text(title),
-            subtitle: Text('Total: ${price * quantity}, Toppings: ${toppings}'),
+            subtitle: Text(
+                'Total: ${price * quantity}, Toppings: ${toppings.map((t) => t.name).join(",")}'),
             trailing: Text('$quantity x'),
           ),
         ),
