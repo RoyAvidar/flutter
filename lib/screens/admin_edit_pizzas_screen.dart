@@ -90,7 +90,12 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
       return;
     }
     _formKey.currentState.save();
-    Provider.of<Pizzas>(context, listen: false).addPizza(_editedPizza);
+    if (_editedPizza.id != null) {
+      Provider.of<Pizzas>(context, listen: false)
+          .updatePizza(_editedPizza.id, _editedPizza);
+    } else {
+      Provider.of<Pizzas>(context, listen: false).addPizza(_editedPizza);
+    }
     Navigator.of(context).pop();
   }
 
@@ -141,7 +146,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                     price: _editedPizza.price,
                     imageUrl: _editedPizza.imageUrl,
                     toppings: _editedPizza.toppings,
-                    id: null,
+                    id: _editedPizza.id,
+                    isFavorite: _editedPizza.isFavorite,
                   );
                 },
               ),
@@ -170,7 +176,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                     price: double.parse(value),
                     imageUrl: _editedPizza.imageUrl,
                     toppings: _editedPizza.toppings,
-                    id: null,
+                    id: _editedPizza.id,
+                    isFavorite: _editedPizza.isFavorite,
                   );
                 },
               ),
@@ -195,7 +202,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                     price: _editedPizza.price,
                     imageUrl: _editedPizza.imageUrl,
                     toppings: _editedPizza.toppings,
-                    id: null,
+                    id: _editedPizza.id,
+                    isFavorite: _editedPizza.isFavorite,
                   );
                 },
               ),
@@ -231,7 +239,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                     price: _editedPizza.price,
                     imageUrl: _editedPizza.imageUrl,
                     toppings: editedToppings,
-                    id: null,
+                    id: _editedPizza.id,
+                    isFavorite: _editedPizza.isFavorite,
                   );
                 },
               ),
@@ -263,7 +272,7 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
-                      //controller: _imageUrlController,
+                      //controller: _imageUrlController.text,
                       focusNode: _imageUrlFocusNode,
                       onEditingComplete: () {
                         setState(() {});
@@ -293,7 +302,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                           price: _editedPizza.price,
                           imageUrl: value,
                           toppings: _editedPizza.toppings,
-                          id: null,
+                          id: _editedPizza.id,
+                          isFavorite: _editedPizza.isFavorite,
                         );
                       },
                     ),

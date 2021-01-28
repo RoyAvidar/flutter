@@ -79,4 +79,14 @@ class Pizzas with ChangeNotifier {
     _items.add(newPizza);
     notifyListeners();
   }
+
+  void updatePizza(String id, Pizza newPizza) {
+    final pizzIndex = _items.indexWhere((pizz) => pizz.id == id);
+    if (pizzIndex >= 0) {
+      _items[pizzIndex] = newPizza;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
 }
