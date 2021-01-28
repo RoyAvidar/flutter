@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../screens/admin_edit_pizzas_screen.dart';
+
 class AdminPizzaItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
 
-  AdminPizzaItem(this.title, this.imageUrl);
+  AdminPizzaItem(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,10 @@ class AdminPizzaItem extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AdminEditPizzaScreen.routeName, arguments: id);
+                },
                 color: Theme.of(context).primaryColor,
               ),
               IconButton(

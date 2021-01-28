@@ -31,6 +31,7 @@ class AdminPizzaScreen extends StatelessWidget {
           itemBuilder: (_, i) => Column(
             children: [
               AdminPizzaItem(
+                pizzasData.items[i].id,
                 pizzasData.items[i].title,
                 pizzasData.items[i].imageUrl,
               ),

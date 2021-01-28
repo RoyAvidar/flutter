@@ -66,4 +66,17 @@ class Pizzas with ChangeNotifier {
   List<Pizza> get favoriteItems {
     return _items.where((pizzaItem) => pizzaItem.isFavorite).toList();
   }
+
+  void addPizza(Pizza pizza) {
+    final newPizza = Pizza(
+      title: pizza.title,
+      description: pizza.description,
+      price: pizza.price,
+      imageUrl: pizza.imageUrl,
+      toppings: pizza.toppings,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newPizza);
+    notifyListeners();
+  }
 }
