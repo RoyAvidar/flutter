@@ -100,13 +100,14 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  static const List<String> _nameList = [
-    'One',
-    'Two',
-    'Three',
-    'Four',
+  static final List<Topping> _nameList = [
+    Toppings().peperoni,
+    Toppings().bazil,
+    Toppings().mushroom,
+    Toppings().onion,
+    Toppings().margherita,
   ];
-  String _dropdownValue = _nameList.first;
+  Topping _dropdownValue = _nameList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -207,27 +208,27 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                   );
                 },
               ),
-              DropdownButtonFormField<String>(
+              DropdownButtonFormField<Topping>(
                 decoration: InputDecoration(labelText: 'Toppings'),
                 value: _dropdownValue,
                 icon: Icon(Icons.arrow_downward),
                 iconSize: 20,
                 elevation: 15,
                 style: TextStyle(color: Colors.deepOrange),
-                onChanged: (String newValue) {
+                onChanged: (Topping newValue) {
                   setState(() {
                     _dropdownValue = newValue;
                   });
                 },
                 items: [
-                  for (String i in _nameList)
+                  for (Topping i in _nameList)
                     DropdownMenuItem(
                       value: i,
-                      child: Text('$i'),
+                      child: Text('${i.name}'),
                     ),
                 ],
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value == null) {
                     return 'Please choose a topping.';
                   }
                   return null;
@@ -268,11 +269,11 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      initialValue: _initValues['imageUrl'],
+                      //initialValue: _initValues['imageUrl'],
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
-                      //controller: _imageUrlController.text,
+                      controller: _imageUrlController,
                       focusNode: _imageUrlFocusNode,
                       onEditingComplete: () {
                         setState(() {});

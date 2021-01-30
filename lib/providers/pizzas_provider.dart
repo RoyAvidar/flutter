@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pizza.dart';
 import '../models/topping.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Pizzas with ChangeNotifier {
   List<Pizza> _items = [
@@ -67,16 +69,33 @@ class Pizzas with ChangeNotifier {
     return _items.where((pizzaItem) => pizzaItem.isFavorite).toList();
   }
 
-  void addPizza(Pizza pizza) {
+  void addPizza(Pizza pizza) async {
+    print(pizza.price);
+    const url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json';
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'title': pizza.title,
+        'description': pizza.description,
+        'price': pizza.price,
+        'imageUrl': pizza.imageUrl,
+        'toppings': pizza.toppings
+            .map((t) => {'name': t.name, 'price': t.price})
+            .toList()
+      }),
+    );
+
     final newPizza = Pizza(
       title: pizza.title,
       description: pizza.description,
       price: pizza.price,
       imageUrl: pizza.imageUrl,
       toppings: pizza.toppings,
-      id: DateTime.now().toString(),
+      id: json.decode(response.body)['name'],
     );
     _items.add(newPizza);
+
     notifyListeners();
   }
 

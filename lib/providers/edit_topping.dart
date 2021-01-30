@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/topping.dart';
 
 class EditTopping with ChangeNotifier {
-  void elad() {
+  void addTopping() {
     print(Text('elad'));
   }
 }
