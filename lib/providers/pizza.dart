@@ -32,7 +32,7 @@ class Pizza with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
     final url =
-        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizzas/$id.json';
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json';
     try {
       final response = await http.patch(
         url,
