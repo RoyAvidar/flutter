@@ -5,6 +5,7 @@ import './cart_screen.dart';
 import '../widgets/pizzas_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
+import '../providers/pizzas_provider.dart';
 import '../widgets/app_drawer.dart';
 
 enum FilterOptions {
@@ -19,6 +20,30 @@ class PizzaOverviewScreen extends StatefulWidget {
 
 class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    //Provider.of<Pizzas>(context).fetchAndSetPizzas(); Won't work
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Pizzas>(context).fetchAndSetPizzas().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +90,11 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: PizzasGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : PizzasGrid(_showOnlyFavorites),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/admin_edit_pizzas_screen.dart';
+import '../providers/pizzas_provider.dart';
 
 class AdminPizzaItem extends StatelessWidget {
   final String id;
@@ -30,7 +32,9 @@ class AdminPizzaItem extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: null,
+                onPressed: () {
+                  Provider.of<Pizzas>(context, listen: false).deletePizza(id);
+                },
                 color: Theme.of(context).errorColor,
               ),
             ],

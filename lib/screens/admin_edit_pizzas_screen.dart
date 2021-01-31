@@ -25,6 +25,7 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
   );
   List<Topping> editedToppings = [];
   var _isInit = true;
+  var _isLoading = false;
   var _initValues = {
     'title': '',
     'description': '',
@@ -50,7 +51,6 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
           'title': _editedPizza.title,
           'description': _editedPizza.description,
           'price': _editedPizza.price.toString(),
-          //'imageUrl': _editedPizza.imageUrl,
           'imageUrl': '',
           //'toppings': _editedPizza.toppings.toString(),
         };
@@ -83,20 +83,50 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid =
         _formKey.currentState.validate(); //triggers all the validators
     if (!isValid) {
       return;
     }
     _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
     if (_editedPizza.id != null) {
       Provider.of<Pizzas>(context, listen: false)
           .updatePizza(_editedPizza.id, _editedPizza);
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     } else {
-      Provider.of<Pizzas>(context, listen: false).addPizza(_editedPizza);
+      try {
+        await Provider.of<Pizzas>(context, listen: false)
+            .addPizza(_editedPizza);
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Okay'),
+              )
+            ],
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      }
     }
-    Navigator.of(context).pop();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -121,178 +151,119 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                initialValue: _initValues['title'],
-                decoration: InputDecoration(labelText: 'Title'),
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_priceFocusNode);
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please provide a value.';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _editedPizza = Pizza(
-                    title: value,
-                    description: _editedPizza.description,
-                    price: _editedPizza.price,
-                    imageUrl: _editedPizza.imageUrl,
-                    toppings: _editedPizza.toppings,
-                    id: _editedPizza.id,
-                    isFavorite: _editedPizza.isFavorite,
-                  );
-                },
-              ),
-              TextFormField(
-                initialValue: _initValues['price'],
-                decoration: InputDecoration(labelText: 'Price'),
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                focusNode: _priceFocusNode,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a price.';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  if (double.parse(value) <= 10) {
-                    return 'Minimum price should be greater than ten.';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _editedPizza = Pizza(
-                    title: _editedPizza.title,
-                    description: _editedPizza.description,
-                    price: double.parse(value),
-                    imageUrl: _editedPizza.imageUrl,
-                    toppings: _editedPizza.toppings,
-                    id: _editedPizza.id,
-                    isFavorite: _editedPizza.isFavorite,
-                  );
-                },
-              ),
-              TextFormField(
-                initialValue: _initValues['description'],
-                decoration: InputDecoration(labelText: 'Description'),
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a description.';
-                  }
-                  if (value.length < 10) {
-                    return 'Description should be at least 10 charecters long';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _editedPizza = Pizza(
-                    title: _editedPizza.title,
-                    description: value,
-                    price: _editedPizza.price,
-                    imageUrl: _editedPizza.imageUrl,
-                    toppings: _editedPizza.toppings,
-                    id: _editedPizza.id,
-                    isFavorite: _editedPizza.isFavorite,
-                  );
-                },
-              ),
-              DropdownButtonFormField<Topping>(
-                decoration: InputDecoration(labelText: 'Toppings'),
-                value: _dropdownValue,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 20,
-                elevation: 15,
-                style: TextStyle(color: Colors.deepOrange),
-                onChanged: (Topping newValue) {
-                  setState(() {
-                    _dropdownValue = newValue;
-                  });
-                },
-                items: [
-                  for (Topping i in _nameList)
-                    DropdownMenuItem(
-                      value: i,
-                      child: Text('${i.name}'),
-                    ),
-                ],
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please choose a topping.';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _editedPizza = Pizza(
-                    title: _editedPizza.title,
-                    description: _editedPizza.description,
-                    price: _editedPizza.price,
-                    imageUrl: _editedPizza.imageUrl,
-                    toppings: editedToppings,
-                    id: _editedPizza.id,
-                    isFavorite: _editedPizza.isFavorite,
-                  );
-                },
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 8, right: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    child: _imageUrlController.text.isEmpty
-                        ? Text('Enter a URL')
-                        : FittedBox(
-                            child: Image.network(
-                              _imageUrlController.text,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      //initialValue: _initValues['imageUrl'],
-                      decoration: InputDecoration(labelText: 'Image URL'),
-                      keyboardType: TextInputType.url,
-                      textInputAction: TextInputAction.done,
-                      controller: _imageUrlController,
-                      focusNode: _imageUrlFocusNode,
-                      onEditingComplete: () {
-                        setState(() {});
-                      },
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: _initValues['title'],
+                      decoration: InputDecoration(labelText: 'Title'),
+                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
-                        _saveForm();
+                        FocusScope.of(context).requestFocus(_priceFocusNode);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter an image.';
+                          return 'Please provide a value.';
                         }
-                        if (!value.startsWith('http') &&
-                            !value.startsWith('https')) {
-                          return 'Please enter a valid URL.';
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedPizza = Pizza(
+                          title: value,
+                          description: _editedPizza.description,
+                          price: _editedPizza.price,
+                          imageUrl: _editedPizza.imageUrl,
+                          toppings: _editedPizza.toppings,
+                          id: _editedPizza.id,
+                          isFavorite: _editedPizza.isFavorite,
+                        );
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValues['price'],
+                      decoration: InputDecoration(labelText: 'Price'),
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
+                      focusNode: _priceFocusNode,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a price.';
                         }
-                        if (!value.endsWith('.png') &&
-                            !value.endsWith('.jpg') &&
-                            !value.endsWith('.jpeg')) {
-                          return 'Please enter a valid image Url.';
+                        if (double.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
+                        if (double.parse(value) <= 10) {
+                          return 'Minimum price should be greater than ten.';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedPizza = Pizza(
+                          title: _editedPizza.title,
+                          description: _editedPizza.description,
+                          price: double.parse(value),
+                          imageUrl: _editedPizza.imageUrl,
+                          toppings: _editedPizza.toppings,
+                          id: _editedPizza.id,
+                          isFavorite: _editedPizza.isFavorite,
+                        );
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValues['description'],
+                      decoration: InputDecoration(labelText: 'Description'),
+                      maxLines: 3,
+                      keyboardType: TextInputType.multiline,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a description.';
+                        }
+                        if (value.length < 10) {
+                          return 'Description should be at least 10 charecters long';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedPizza = Pizza(
+                          title: _editedPizza.title,
+                          description: value,
+                          price: _editedPizza.price,
+                          imageUrl: _editedPizza.imageUrl,
+                          toppings: _editedPizza.toppings,
+                          id: _editedPizza.id,
+                          isFavorite: _editedPizza.isFavorite,
+                        );
+                      },
+                    ),
+                    DropdownButtonFormField<Topping>(
+                      decoration: InputDecoration(labelText: 'Toppings'),
+                      value: _dropdownValue,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 20,
+                      elevation: 15,
+                      style: TextStyle(color: Colors.deepOrange),
+                      onChanged: (Topping newValue) {
+                        setState(() {
+                          _dropdownValue = newValue;
+                        });
+                      },
+                      items: [
+                        for (Topping i in _nameList)
+                          DropdownMenuItem(
+                            value: i,
+                            child: Text('${i.name}'),
+                          ),
+                      ],
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please choose a topping.';
                         }
                         return null;
                       },
@@ -301,20 +272,83 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                           title: _editedPizza.title,
                           description: _editedPizza.description,
                           price: _editedPizza.price,
-                          imageUrl: value,
-                          toppings: _editedPizza.toppings,
+                          imageUrl: _editedPizza.imageUrl,
+                          toppings: editedToppings,
                           id: _editedPizza.id,
                           isFavorite: _editedPizza.isFavorite,
                         );
                       },
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          height: 100,
+                          margin: EdgeInsets.only(top: 8, right: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          child: _imageUrlController.text.isEmpty
+                              ? Text('Enter a URL')
+                              : FittedBox(
+                                  child: Image.network(
+                                    _imageUrlController.text,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            //initialValue: _initValues['imageUrl'],
+                            decoration: InputDecoration(labelText: 'Image URL'),
+                            keyboardType: TextInputType.url,
+                            textInputAction: TextInputAction.done,
+                            controller: _imageUrlController,
+                            focusNode: _imageUrlFocusNode,
+                            onEditingComplete: () {
+                              setState(() {});
+                            },
+                            onFieldSubmitted: (_) {
+                              _saveForm();
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please enter an image.';
+                              }
+                              if (!value.startsWith('http') &&
+                                  !value.startsWith('https')) {
+                                return 'Please enter a valid URL.';
+                              }
+                              if (!value.endsWith('.png') &&
+                                  !value.endsWith('.jpg') &&
+                                  !value.endsWith('.jpeg')) {
+                                return 'Please enter a valid image Url.';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _editedPizza = Pizza(
+                                title: _editedPizza.title,
+                                description: _editedPizza.description,
+                                price: _editedPizza.price,
+                                imageUrl: value,
+                                toppings: _editedPizza.toppings,
+                                id: _editedPizza.id,
+                                isFavorite: _editedPizza.isFavorite,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }
