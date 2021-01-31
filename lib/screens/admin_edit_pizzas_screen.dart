@@ -94,12 +94,8 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
       _isLoading = true;
     });
     if (_editedPizza.id != null) {
-      Provider.of<Pizzas>(context, listen: false)
+      await Provider.of<Pizzas>(context, listen: false)
           .updatePizza(_editedPizza.id, _editedPizza);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Pizzas>(context, listen: false)
@@ -120,13 +116,12 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
             ],
           ),
         );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   final _formKey = GlobalKey<FormState>();

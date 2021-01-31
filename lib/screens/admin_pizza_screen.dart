@@ -9,6 +9,10 @@ import '../screens/admin_edit_pizzas_screen.dart';
 class AdminPizzaScreen extends StatelessWidget {
   static const routeName = '/admin-pizzas';
 
+  Future<void> _refreshPizzas(BuildContext context) async {
+    await Provider.of<Pizzas>(context, listen: false).fetchAndSetPizzas();
+  }
+
   @override
   Widget build(BuildContext context) {
     final pizzasData = Provider.of<Pizzas>(context);
@@ -24,19 +28,22 @@ class AdminPizzaScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: pizzasData.items.length,
-          itemBuilder: (_, i) => Column(
-            children: [
-              AdminPizzaItem(
-                pizzasData.items[i].id,
-                pizzasData.items[i].title,
-                pizzasData.items[i].imageUrl,
-              ),
-              Divider(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: () => _refreshPizzas(context),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: pizzasData.items.length,
+            itemBuilder: (_, i) => Column(
+              children: [
+                AdminPizzaItem(
+                  pizzasData.items[i].id,
+                  pizzasData.items[i].title,
+                  pizzasData.items[i].imageUrl,
+                ),
+                Divider(),
+              ],
+            ),
           ),
         ),
       ),

@@ -13,6 +13,7 @@ class AdminPizzaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     return ListTile(
         title: Text(title),
         leading: CircleAvatar(
@@ -32,8 +33,17 @@ class AdminPizzaItem extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () {
-                  Provider.of<Pizzas>(context, listen: false).deletePizza(id);
+                onPressed: () async {
+                  try {
+                    await Provider.of<Pizzas>(context, listen: false)
+                        .deletePizza(id);
+                  } catch (error) {
+                    scaffold.showSnackBar(
+                      SnackBar(
+                        content: Text('Deleting falied'),
+                      ),
+                    );
+                  }
                 },
                 color: Theme.of(context).errorColor,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pizza.dart';
 import '../models/topping.dart';
+import '../models/http_exception.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -127,9 +128,19 @@ class Pizzas with ChangeNotifier {
     }
   }
 
-  void updatePizza(String id, Pizza newPizza) {
+  Future<void> updatePizza(String id, Pizza newPizza) async {
     final pizzIndex = _items.indexWhere((pizz) => pizz.id == id);
     if (pizzIndex >= 0) {
+      final url =
+          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json';
+      await http.patch(url,
+          body: json.encode({
+            'title': newPizza.title,
+            'description': newPizza.description,
+            'imageUrl': newPizza.imageUrl,
+            'price': newPizza.price,
+            'toppings': newPizza.toppings,
+          }));
       _items[pizzIndex] = newPizza;
       notifyListeners();
     } else {
@@ -137,8 +148,19 @@ class Pizzas with ChangeNotifier {
     }
   }
 
-  void deletePizza(String id) {
-    _items.removeWhere((pizza) => pizza.id == id);
+  Future<void> deletePizza(String id) async {
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json';
+    final existingPizzaIndex = _items.indexWhere((pizza) => pizza.id == id);
+    var existingPizza = _items[existingPizzaIndex];
+    _items.removeAt(existingPizzaIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existingPizzaIndex, existingPizza);
+      notifyListeners();
+      throw HttpException('Could not delete pizza.');
+    }
+    existingPizza = null;
   }
 }
