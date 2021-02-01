@@ -268,7 +268,7 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
                           description: _editedPizza.description,
                           price: _editedPizza.price,
                           imageUrl: _editedPizza.imageUrl,
-                          toppings: editedToppings,
+                          toppings: [value],
                           id: _editedPizza.id,
                           isFavorite: _editedPizza.isFavorite,
                         );

@@ -19,9 +19,9 @@ class OrdersScreen extends StatelessWidget {
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else {
-            if (dataSnapshot.error != null) {
+            if (dataSnapshot.error == null) {
               return Center(
                 child: Text('An error has occured!'),
               );

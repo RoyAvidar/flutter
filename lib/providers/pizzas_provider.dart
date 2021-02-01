@@ -85,7 +85,9 @@ class Pizzas with ChangeNotifier {
           price: pizzData['price'],
           isFavorite: pizzData['isFavorite'],
           imageUrl: pizzData['imageUrl'],
-          toppings: pizzData['toppings'],
+          toppings: ((pizzData['toppings']) as List<dynamic>)
+              .map((t) => Topping(t['name'], t['price']))
+              .toList(),
         ));
       });
       _items = loadedPizzas;
@@ -96,6 +98,7 @@ class Pizzas with ChangeNotifier {
   }
 
   Future<void> addPizza(Pizza pizza) async {
+    print(pizza.toppings);
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json';
     try {
