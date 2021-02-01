@@ -63,7 +63,6 @@ class Orders with ChangeNotifier {
     final timestamp = DateTime.now();
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders.json';
-
     final response = await http.post(
       url,
       body: json.encode(

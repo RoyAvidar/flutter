@@ -98,7 +98,6 @@ class Pizzas with ChangeNotifier {
   }
 
   Future<void> addPizza(Pizza pizza) async {
-    print(pizza.toppings);
     const url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json';
     try {
