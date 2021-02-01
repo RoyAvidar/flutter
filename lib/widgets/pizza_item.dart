@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza/models/topping.dart';
 import 'package:flutter_pizza/providers/pizza.dart';
+
 import '../screens/pizza_detail_screen.dart';
 import '../providers/cart.dart';
-
 import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 
 class PizzaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pizza = Provider.of<Pizza>(context);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -33,7 +34,7 @@ class PizzaItem extends StatelessWidget {
             ),
             color: Theme.of(context).accentColor,
             onPressed: () {
-              pizza.toggleFavorite();
+              pizza.toggleFavorite(authData.token);
             },
           ),
           backgroundColor: Colors.black54,

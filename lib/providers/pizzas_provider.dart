@@ -58,6 +58,10 @@ class Pizzas with ChangeNotifier {
     // )
   ];
 
+  final String authToken;
+
+  Pizzas(this.authToken, this._items);
+
   List<Pizza> get items {
     return [..._items];
   }
@@ -71,8 +75,8 @@ class Pizzas with ChangeNotifier {
   }
 
   Future<void> fetchAndSetPizzas() async {
-    const url =
-        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json';
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -98,8 +102,8 @@ class Pizzas with ChangeNotifier {
   }
 
   Future<void> addPizza(Pizza pizza) async {
-    const url =
-        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json';
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json?auth=$authToken';
     try {
       final response = await http.post(
         url,
@@ -134,14 +138,16 @@ class Pizzas with ChangeNotifier {
     final pizzIndex = _items.indexWhere((pizz) => pizz.id == id);
     if (pizzIndex >= 0) {
       final url =
-          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json';
+          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json?auth=$authToken';
       await http.patch(url,
           body: json.encode({
             'title': newPizza.title,
             'description': newPizza.description,
             'imageUrl': newPizza.imageUrl,
             'price': newPizza.price,
-            'toppings': newPizza.toppings,
+            'toppings': newPizza.toppings
+                .map((t) => {'name': t.name, 'price': t.price})
+                .toList(),
           }));
       _items[pizzIndex] = newPizza;
       notifyListeners();
@@ -152,7 +158,7 @@ class Pizzas with ChangeNotifier {
 
   Future<void> deletePizza(String id) async {
     final url =
-        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json';
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$id.json?auth=$authToken';
     final existingPizzaIndex = _items.indexWhere((pizza) => pizza.id == id);
     var existingPizza = _items[existingPizzaIndex];
     _items.removeAt(existingPizzaIndex);

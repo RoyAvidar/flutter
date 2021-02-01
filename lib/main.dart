@@ -8,9 +8,11 @@ import './screens/pizza_overview_screen.dart';
 import './screens/pizza_detail_screen.dart';
 import './screens/admin_pizza_screen.dart';
 import './screens/admin_edit_pizzas_screen.dart';
+import './screens/auth_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
+import './providers/auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,30 +24,41 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Pizzas(),
+          create: (ctx) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Pizzas>(
+          update: (ctx, auth, previousPizzas) => Pizzas(
+            auth.token,
+            previousPizzas == null ? [] : previousPizzas.items,
+          ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         )
       ],
-      child: MaterialApp(
-        title: 'Pizza Time',
-        theme: ThemeData(
-          primaryColor: Colors.yellow[800],
-          accentColor: Colors.red,
+      child: Consumer<Auth>(
+        builder: (ctx, authData, _) => MaterialApp(
+          title: 'Pizza Time',
+          theme: ThemeData(
+            primaryColor: Colors.yellow[800],
+            accentColor: Colors.red,
+          ),
+          home: authData.isAuth ? PizzaOverviewScreen() : AuthScreen(),
+          routes: {
+            PizzaDetailScreen.routeName: (ctx) => PizzaDetailScreen(),
+            PizzaEditScreen.routeName: (ctx) => PizzaEditScreen(),
+            CartScreen.routeName: (ctx) => CartScreen(),
+            OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            AdminPizzaScreen.routeName: (ctx) => AdminPizzaScreen(),
+            AdminEditPizzaScreen.routeName: (ctx) => AdminEditPizzaScreen(),
+          },
         ),
-        home: PizzaOverviewScreen(),
-        routes: {
-          PizzaDetailScreen.routeName: (ctx) => PizzaDetailScreen(),
-          PizzaEditScreen.routeName: (ctx) => PizzaEditScreen(),
-          CartScreen.routeName: (ctx) => CartScreen(),
-          OrdersScreen.routeName: (ctx) => OrdersScreen(),
-          AdminPizzaScreen.routeName: (ctx) => AdminPizzaScreen(),
-          AdminEditPizzaScreen.routeName: (ctx) => AdminEditPizzaScreen(),
-        },
       ),
     );
   }
