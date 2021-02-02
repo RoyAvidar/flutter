@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pizza/screens/pizza_edit_screen.dart';
 import 'package:provider/provider.dart';
 
+import './screens/splash_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/cart_screen.dart';
 import './screens/pizza_overview_screen.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Pizzas>(
           update: (ctx, auth, previousPizzas) => Pizzas(
             auth.token,
+            auth.userId,
             previousPizzas == null ? [] : previousPizzas.items,
           ),
         ),
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, previousOrders) => Orders(
             auth.token,
+            auth.userId,
             previousOrders == null ? [] : previousOrders.orders,
           ),
         )
@@ -49,7 +52,15 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.yellow[800],
             accentColor: Colors.red,
           ),
-          home: authData.isAuth ? PizzaOverviewScreen() : AuthScreen(),
+          home: authData.isAuth
+              ? PizzaOverviewScreen()
+              : FutureBuilder(
+                  future: authData.tryAutoLogin(),
+                  builder: (ctx, authResult) =>
+                      authResult.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
             PizzaDetailScreen.routeName: (ctx) => PizzaDetailScreen(),
             PizzaEditScreen.routeName: (ctx) => PizzaEditScreen(),

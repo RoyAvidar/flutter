@@ -34,7 +34,7 @@ class PizzaItem extends StatelessWidget {
             ),
             color: Theme.of(context).accentColor,
             onPressed: () {
-              pizza.toggleFavorite(authData.token);
+              pizza.toggleFavorite(authData.token, authData.userId);
             },
           ),
           backgroundColor: Colors.black54,

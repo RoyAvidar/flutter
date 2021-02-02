@@ -59,8 +59,9 @@ class Pizzas with ChangeNotifier {
   ];
 
   final String authToken;
+  final String userId;
 
-  Pizzas(this.authToken, this._items);
+  Pizzas(this.authToken, this.userId, this._items);
 
   List<Pizza> get items {
     return [..._items];
@@ -75,11 +76,18 @@ class Pizzas with ChangeNotifier {
   }
 
   Future<void> fetchAndSetPizzas() async {
-    final url =
+    var url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      url =
+          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
       final List<Pizza> loadedPizzas = [];
       extractedData.forEach((pizzId, pizzData) {
         loadedPizzas.add(Pizza(
@@ -87,7 +95,8 @@ class Pizzas with ChangeNotifier {
           title: pizzData['title'],
           description: pizzData['description'],
           price: pizzData['price'],
-          isFavorite: pizzData['isFavorite'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[pizzId] ?? false,
           imageUrl: pizzData['imageUrl'],
           toppings: ((pizzData['toppings']) as List<dynamic>)
               .map((t) => Topping(t['name'], t['price']))
@@ -112,7 +121,6 @@ class Pizzas with ChangeNotifier {
           'description': pizza.description,
           'price': pizza.price,
           'imageUrl': pizza.imageUrl,
-          'isFavorite': pizza.isFavorite,
           'toppings': pizza.toppings
               .map((t) => {'name': t.name, 'price': t.price})
               .toList()
