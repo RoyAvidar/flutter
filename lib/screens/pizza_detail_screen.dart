@@ -66,10 +66,18 @@ class PizzaDetailScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
+              'Toppings: ${loadedPizza.toppings.map((t) => t.name).join(",")}',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 17,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
               '\$${loadedPizza.price}',
               style: TextStyle(
                 color: Theme.of(context).accentColor,
-                fontSize: 17,
+                fontSize: 15,
               ),
             ),
             Row(

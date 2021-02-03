@@ -51,7 +51,7 @@ class Pizzas with ChangeNotifier {
     //   id: 'p5',
     //   title: 'Pizza Margherita',
     //   description:
-    //       'izza Margherita is a typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella cheese, fresh basil, salt and extra-virgin olive oil.',
+    //       'Pizza Margherita is a typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella cheese, fresh basil, salt and extra-virgin olive oil.',
     //   price: 29.90,
     //   imageUrl: 'https://i.ytimg.com/vi/xKDnD8sJsuY/maxresdefault.jpg',
     //   toppings: [Toppings().margherita],

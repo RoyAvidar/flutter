@@ -43,6 +43,14 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            leading: Icon(Icons.info_outline_rounded),
+            title: Text('Personal Information'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed('/personalInfo');
+            },
+          ),
+          Divider(),
+          ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
             onTap: () {

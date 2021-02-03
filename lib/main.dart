@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza/providers/address.dart';
 import 'package:provider/provider.dart';
 
 import './screens/pizza_edit_screen.dart';
@@ -10,6 +11,9 @@ import './screens/pizza_detail_screen.dart';
 import './screens/admin_pizza_screen.dart';
 import './screens/admin_edit_pizzas_screen.dart';
 import './screens/auth_screen.dart';
+import './screens/personal_info_screen.dart';
+import './screens/address_screen.dart';
+import './screens/edit_address_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
@@ -43,7 +47,10 @@ class MyApp extends StatelessWidget {
             auth.userId,
             previousOrders == null ? [] : previousOrders.orders,
           ),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Address(),
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, authData, _) => MaterialApp(
@@ -68,6 +75,9 @@ class MyApp extends StatelessWidget {
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             AdminPizzaScreen.routeName: (ctx) => AdminPizzaScreen(),
             AdminEditPizzaScreen.routeName: (ctx) => AdminEditPizzaScreen(),
+            PersonalInfoScreen.routeName: (ctx) => PersonalInfoScreen(),
+            AddressScreen.routeName: (ctx) => AddressScreen(),
+            EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
           },
         ),
       ),

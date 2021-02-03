@@ -33,10 +33,32 @@ class AdminPizzaItem extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () async {
+                onPressed: () {
                   try {
-                    await Provider.of<Pizzas>(context, listen: false)
-                        .deletePizza(id);
+                    return showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text('Are you sure?'),
+                        content: Text(
+                            'Do you want to remove this pizza from the list?'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              Navigator.of(ctx).pop(false);
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () async {
+                              await Provider.of<Pizzas>(context, listen: false)
+                                  .deletePizza(id);
+                              Navigator.of(ctx).pop(true);
+                            },
+                          )
+                        ],
+                      ),
+                    );
                   } catch (error) {
                     scaffold.showSnackBar(
                       SnackBar(
