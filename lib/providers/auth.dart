@@ -51,6 +51,13 @@ class Auth with ChangeNotifier {
       }
       _token = responseData['idToken'];
       _userId = responseData['localId'];
+      var isAdmin = false;
+      if (urlSegment == 'accounts:signUp') {
+        addUser(_userId);
+      } else {
+        fetchUserId(_userId);
+        isAdmin = await fetchUserId(_userId);
+      }
       _expiryDate = DateTime.now().add(
         Duration(
           seconds: int.parse(
@@ -65,6 +72,7 @@ class Auth with ChangeNotifier {
         {
           'token': _token,
           'userId': _userId,
+          'admin': isAdmin,
           'expiryDate': _expiryDate.toIso8601String(),
         },
       );
@@ -72,6 +80,30 @@ class Auth with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<void> addUser(String _userId) async {
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId.json?auth=$_token';
+    await http.post(
+      url,
+      body: json.encode(
+        {
+          'admin': false,
+        },
+      ),
+    );
+  }
+
+  Future<bool> fetchUserId(String _userId) async {
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId.json?auth=$_token';
+    final response = await http.get(url);
+    final fetchedData = json.decode(response.body) as Map<String, dynamic>;
+    print(fetchedData);
+    fetchedData.forEach((_userId, value) {
+      return value['admin'];
+    });
   }
 
   Future<void> singup(String email, String password) async {

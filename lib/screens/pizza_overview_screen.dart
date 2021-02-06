@@ -6,6 +6,7 @@ import '../widgets/pizzas_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
 import '../providers/pizzas_provider.dart';
+
 import '../widgets/app_drawer.dart';
 
 enum FilterOptions {

@@ -41,18 +41,18 @@ class AddressScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          // here are going to be all the userAddress in a list (addressItem)
-          Expanded(
-            child: ListView.builder(
-              itemCount: address.addressCount,
-              itemBuilder: (ctx, i) => AddressItemWidget(
-                address.addressMap.values.toList()[i].addressId,
-                address.addressMap.values.toList()[i].cityName,
-                address.addressMap.values.toList()[i].streetName,
-                address.addressMap.values.toList()[i].streetNumber,
-              ),
-            ),
-          ),
+          //here are going to be all the userAddress in a list (addressItem)
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: address.addressCount,
+          //     //itemBuilder: (ctx, i) => AddressItemWidget(
+          //       // address.addressMap.values.toList()[i].addressId,
+          //       // address.addressMap.values.toList()[i].cityName,
+          //       // address.addressMap.values.toList()[i].streetName,
+          //       // address.addressMap.values.toList()[i].streetNumber,
+          //     ),
+          // ),
+          // ),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/orders_screen.dart';
 import '../screens/admin_pizza_screen.dart';
 import '../providers/auth.dart';
@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final prefs = SharedPreferences.getInstance();
     return Drawer(
       child: Column(
         children: <Widget>[
