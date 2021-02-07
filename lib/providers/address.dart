@@ -62,16 +62,18 @@ class Address with ChangeNotifier {
       return;
     }
     extractedData.forEach((addressId, addressData) {
-      loadedAddress.add(
-        AddressItem(
-          addressId: addressId,
-          cityName: addressData['cityName'],
-          streetName: addressData['streetName'],
-          streetNumber: addressData['streetNumber'],
-        ),
-      );
+      if (addressData['admin'] == null) {
+        loadedAddress.add(
+          AddressItem(
+            addressId: addressId,
+            cityName: addressData['cityName'],
+            streetName: addressData['streetName'],
+            streetNumber: addressData['streetNumber'],
+          ),
+        );
+        _addressList = loadedAddress.reversed.toList();
+      }
     });
-    _addressList = loadedAddress.reversed.toList();
     notifyListeners();
   }
 }
