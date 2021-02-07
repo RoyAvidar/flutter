@@ -48,8 +48,12 @@ class MyApp extends StatelessWidget {
             previousOrders == null ? [] : previousOrders.orders,
           ),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Address(),
+        ChangeNotifierProxyProvider<Auth, Address>(
+          update: (ctx, auth, previousAddress) => Address(
+            auth.token,
+            auth.userId,
+            previousAddress == null ? [] : previousAddress.addressList,
+          ),
         ),
       ],
       child: Consumer<Auth>(

@@ -104,8 +104,10 @@ class Auth with ChangeNotifier {
     print(fetchedData);
     fetchedData.forEach(
       (_userId, value) {
-        prefs.setBool('isAdmin', value['admin']);
-        return value['admin'];
+        if (value['admin'] != null) {
+          prefs.setBool('isAdmin', value['admin']);
+        }
+        return prefs.getBool('isAdmin');
       },
     );
   }

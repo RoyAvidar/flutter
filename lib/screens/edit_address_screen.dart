@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza/providers/address.dart';
+import 'package:provider/provider.dart';
+import '../providers/address.dart';
 import '../models/address.dart';
 
 class EditAddressScreen extends StatefulWidget {
@@ -17,6 +18,43 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   );
   final _formKey = GlobalKey<FormState>();
   var _isLoading = false;
+
+  Future<void> _saveAddressForm() async {
+    final isValid =
+        _formKey.currentState.validate(); //triggers all the validators
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      await Provider.of<Address>(context, listen: false)
+          .addAddress(_editedAddress);
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An error occurred!'),
+          content: Text('Something went wrong.'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +63,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save_outlined),
-            onPressed: null, //_saveFrom method should run here
+            onPressed: _saveAddressForm, //_saveFrom method should run here
           ),
         ],
       ),

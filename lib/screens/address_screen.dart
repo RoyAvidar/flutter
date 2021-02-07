@@ -10,7 +10,6 @@ class AddressScreen extends StatelessWidget {
   static const routeName = '/address';
   @override
   Widget build(BuildContext context) {
-    final address = Provider.of<Address>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Address'),
@@ -40,19 +39,34 @@ class AddressScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          //here are going to be all the userAddress in a list (addressItem)
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: address.addressCount,
-          //     //itemBuilder: (ctx, i) => AddressItemWidget(
-          //       // address.addressMap.values.toList()[i].addressId,
-          //       // address.addressMap.values.toList()[i].cityName,
-          //       // address.addressMap.values.toList()[i].streetName,
-          //       // address.addressMap.values.toList()[i].streetNumber,
-          //     ),
-          // ),
-          // ),
+          SizedBox(
+            height: 10,
+          ),
+          FutureBuilder(
+            future: Provider.of<Address>(context, listen: false).fetchAddress(),
+            builder: (ctx, snapShot) {
+              if (snapShot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                if (snapShot.error != null) {
+                  print(snapShot.error);
+                  return Center(
+                    child: Text('An Error has occured!'),
+                  );
+                } else {
+                  return Consumer<Address>(
+                    builder: (ctx, addressData, child) => ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: addressData.addressCount,
+                      itemBuilder: (ctx, i) =>
+                          AddressItemWidget(addressData.addressList[i]),
+                    ),
+                  );
+                }
+              }
+            },
+          )
         ],
       ),
     );
