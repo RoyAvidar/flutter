@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../screens/edit_address_screen.dart';
 import '../models/address.dart';
 import '../providers/address.dart';
 
@@ -31,7 +32,10 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
       child: Column(
         children: <Widget>[
           ListTile(
-            title: Text('${widget.addrs.cityName}'),
+            title: Container(
+              width: 100,
+              child: Text('${widget.addrs.cityName}'),
+            ),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
@@ -47,6 +51,23 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: min(20.0 + 25, 100),
               child: Text('${widget.addrs.streetNumber}'),
+            ),
+          if (_expanded)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(EditAddressScreen.routeName);
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {},
+                ),
+              ],
             ),
         ],
       ),

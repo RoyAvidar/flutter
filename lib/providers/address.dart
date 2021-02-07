@@ -76,4 +76,23 @@ class Address with ChangeNotifier {
     });
     notifyListeners();
   }
+
+  Future<void> updateAddress(String id, AddressItem newAddress) async {
+    final addressIndex =
+        _addressList.indexWhere((adrs) => adrs.addressId == id);
+    if (addressIndex >= 0) {
+      final url =
+          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId/$id.json?auth=$_authToken';
+      await http.patch(url,
+          body: json.encode({
+            'cityName': newAddress.cityName,
+            'streetName': newAddress.streetName,
+            'streetNumber': newAddress.streetNumber,
+          }));
+      _addressList[addressIndex] = newAddress;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
 }
