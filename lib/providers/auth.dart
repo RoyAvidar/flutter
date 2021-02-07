@@ -98,12 +98,16 @@ class Auth with ChangeNotifier {
   Future<bool> fetchUserId(String _userId) async {
     final url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId.json?auth=$_token';
+    final prefs = await SharedPreferences.getInstance();
     final response = await http.get(url);
     final fetchedData = json.decode(response.body) as Map<String, dynamic>;
     print(fetchedData);
-    fetchedData.forEach((_userId, value) {
-      return value['admin'];
-    });
+    fetchedData.forEach(
+      (_userId, value) {
+        prefs.setBool('isAdmin', value['admin']);
+        return value['admin'];
+      },
+    );
   }
 
   Future<void> singup(String email, String password) async {

@@ -6,9 +6,14 @@ import '../providers/auth.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
+  Future<bool> getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userDataAdmin = prefs.getBool('isAdmin');
+    return userDataAdmin;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final prefs = SharedPreferences.getInstance();
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -34,12 +39,21 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Manage Pizzas'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(AdminPizzaScreen.routeName);
+          FutureBuilder(
+            future: getUserData(),
+            builder: (ctx, snapshot) {
+              if (snapshot.data == true) {
+                return ListTile(
+                  leading: Icon(Icons.edit),
+                  title: Text('Manage Pizzas'),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AdminPizzaScreen.routeName);
+                  },
+                );
+              } else {
+                return Divider();
+              }
             },
           ),
           Divider(),
