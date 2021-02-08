@@ -15,6 +15,7 @@ import './screens/personal_info_screen.dart';
 import './screens/address_screen.dart';
 import './screens/edit_address_screen.dart';
 import './screens/contact_screen.dart';
+import 'screens/about_us_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
             AddressScreen.routeName: (ctx) => AddressScreen(),
             EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
             ContactScreen.routeName: (ctx) => ContactScreen(),
+            AboutUsScreen.routName: (ctx) => AboutUsScreen(),
           },
         ),
       ),

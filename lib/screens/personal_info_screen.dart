@@ -36,7 +36,9 @@ class PersonalInfoScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.arrow_forward_ios_outlined),
               title: Text('About us'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/aboutUs');
+              },
             ),
             Divider(),
             ListTile(
