@@ -153,6 +153,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         if (value.isEmpty) {
                           return 'Please provide a value';
                         }
+                        if (double.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
                         return null;
                       },
                       onSaved: (value) {
