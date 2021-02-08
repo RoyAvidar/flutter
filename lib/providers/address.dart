@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../models/http_exception.dart';
 import '../models/address.dart';
 import '../widgets/address_item.dart';
 
@@ -24,6 +25,10 @@ class Address with ChangeNotifier {
     return _userId;
   }
 
+  AddressItem findById(String id) {
+    return _addressList.firstWhere((add) => add.addressId == id);
+  }
+
   Future<void> addAddress(AddressItem address) async {
     //adds an Address to the addressMap inside the FireBase
     final url =
@@ -43,7 +48,8 @@ class Address with ChangeNotifier {
         streetName: address.streetName,
         streetNumber: address.streetNumber,
       );
-      addressList.add(newAddress);
+      // addressList.add(newAddress);
+      _addressList.add(newAddress);
       notifyListeners();
     } catch (error) {
       print(error);
@@ -53,6 +59,7 @@ class Address with ChangeNotifier {
 
   Future<void> fetchAddress() async {
     //fetching the addressMap from FireBase for that id
+    _addressList = [];
     final url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId.json?auth=$_authToken';
     final response = await http.get(url);
@@ -94,5 +101,21 @@ class Address with ChangeNotifier {
     } else {
       print('...');
     }
+  }
+
+  Future<void> deleteAddress(String id) async {
+    final url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/users-$_userId/$id.json?auth=$_authToken';
+    final addressIndex = _addressList.indexWhere((add) => add.addressId == id);
+    var existingAddress = _addressList[addressIndex];
+    _addressList.remove(existingAddress);
+    notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _addressList.insert(addressIndex, existingAddress);
+      notifyListeners();
+      throw HttpException('Could not delete this address');
+    }
+    existingAddress = null;
   }
 }

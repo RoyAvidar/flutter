@@ -59,8 +59,9 @@ class AddressScreen extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: addressData.addressCount,
-                      itemBuilder: (ctx, i) =>
-                          AddressItemWidget(addressData.addressList[i]),
+                      itemBuilder: (ctx, i) => AddressItemWidget(
+                          addressData.addressList[i],
+                          addressData.addressList[i].addressId),
                     ),
                   );
                 }

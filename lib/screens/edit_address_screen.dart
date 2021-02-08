@@ -18,6 +18,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   );
   final _formKey = GlobalKey<FormState>();
   var _isLoading = false;
+  var _isInit = true;
+  var _initValues = {
+    'cityName': '',
+    'streetName': '',
+    'streetNumber': '',
+  };
 
   Future<void> _saveAddressForm() async {
     final isValid =
@@ -30,8 +36,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       _isLoading = true;
     });
     try {
-      await Provider.of<Address>(context, listen: false)
-          .addAddress(_editedAddress);
+      if (_editedAddress.addressId != null) {
+        await Provider.of<Address>(context, listen: false)
+            .updateAddress(_editedAddress.addressId, _editedAddress);
+      } else {
+        await Provider.of<Address>(context, listen: false)
+            .addAddress(_editedAddress);
+      }
     } catch (error) {
       await showDialog(
         context: context,
@@ -53,6 +64,24 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       _isLoading = false;
     });
     Navigator.of(context).pop();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final addressId = ModalRoute.of(context).settings.arguments as String;
+      if (addressId != null) {
+        _editedAddress =
+            Provider.of<Address>(context, listen: false).findById(addressId);
+        _initValues = {
+          'cityName': _editedAddress.cityName,
+          'streetName': _editedAddress.streetName,
+          'streetNumber': _editedAddress.streetNumber.toString(),
+        };
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -78,6 +107,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
+                      initialValue: _initValues['cityName'],
                       decoration: InputDecoration(labelText: 'City Name'),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -96,6 +126,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       },
                     ),
                     TextFormField(
+                      initialValue: _initValues['streetName'],
                       decoration: InputDecoration(labelText: 'Street Name'),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -114,6 +145,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       },
                     ),
                     TextFormField(
+                      initialValue: _initValues['streetNumber'],
                       decoration: InputDecoration(labelText: 'Street Number'),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,

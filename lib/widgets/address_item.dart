@@ -1,17 +1,18 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/address.dart';
 import '../screens/edit_address_screen.dart';
 import '../models/address.dart';
-import '../providers/address.dart';
 
 class AddressItemWidget extends StatefulWidget {
   final AddressItem addrs;
-  // final String addressId;
+  final String addressId;
   // final String cityName;
   // final String streetName;
   // final int streetNumber;
 
-  AddressItemWidget(this.addrs
+  AddressItemWidget(this.addrs, this.addressId
       // this.addressId,
       // this.cityName,
       // this.streetName,
@@ -59,13 +60,40 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(EditAddressScreen.routeName);
+                    Navigator.of(context).pushNamed(
+                      EditAddressScreen.routeName,
+                      arguments: widget.addressId,
+                    );
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
-                  onPressed: () {},
+                  onPressed: () {
+                    return showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text('Are you sure?'),
+                        content: Text(
+                            'Do you want to remove the address from your Address List?'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () {
+                              Navigator.of(ctx).pop(false);
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              Provider.of<Address>(context, listen: false)
+                                  .deleteAddress(widget.addressId);
+                              Navigator.of(ctx).pop(true);
+                            },
+                          )
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
