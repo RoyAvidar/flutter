@@ -47,12 +47,12 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
             ),
             subtitle: Text(widget.addrs.streetName),
           ),
-          if (_expanded)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: min(20.0 + 25, 100),
-              child: Text('${widget.addrs.streetNumber}'),
-            ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+            height: min(20.0 + 25, 100),
+            child: Text('${widget.addrs.streetNumber}'),
+            alignment: Alignment.topLeft,
+          ),
           if (_expanded)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
