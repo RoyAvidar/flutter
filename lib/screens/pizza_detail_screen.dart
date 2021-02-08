@@ -47,9 +47,12 @@ class PizzaDetailScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 250,
-              child: Image.network(
-                loadedPizza.imageUrl,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: loadedPizza.id,
+                child: Image.network(
+                  loadedPizza.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             SizedBox(

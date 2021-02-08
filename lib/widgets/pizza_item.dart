@@ -22,9 +22,13 @@ class PizzaItem extends StatelessWidget {
               arguments: pizza.id,
             );
           },
-          child: Image.network(
-            pizza.imageUrl,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: pizza.id,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/pizza-placeholder.jpg'),
+              image: NetworkImage(pizza.imageUrl),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         footer: GridTileBar(
