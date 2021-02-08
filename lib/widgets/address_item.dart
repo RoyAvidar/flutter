@@ -8,16 +8,19 @@ import '../models/address.dart';
 class AddressItemWidget extends StatefulWidget {
   final AddressItem addrs;
   final String addressId;
+
   // final String cityName;
   // final String streetName;
   // final int streetNumber;
 
-  AddressItemWidget(this.addrs, this.addressId
-      // this.addressId,
-      // this.cityName,
-      // this.streetName,
-      // this.streetNumber,
-      );
+  AddressItemWidget(
+    this.addrs,
+    this.addressId,
+    // this.addressId,
+    // this.cityName,
+    // this.streetName,
+    // this.streetNumber,
+  );
 
   @override
   _AddressItemWidgetState createState() => _AddressItemWidgetState();
@@ -33,10 +36,7 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
       child: Column(
         children: <Widget>[
           ListTile(
-            title: Container(
-              width: 100,
-              child: Text('${widget.addrs.cityName}'),
-            ),
+            title: Text('${widget.addrs.cityName}'),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {

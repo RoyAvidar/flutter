@@ -14,6 +14,7 @@ import './screens/auth_screen.dart';
 import './screens/personal_info_screen.dart';
 import './screens/address_screen.dart';
 import './screens/edit_address_screen.dart';
+import './screens/contact_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
             PersonalInfoScreen.routeName: (ctx) => PersonalInfoScreen(),
             AddressScreen.routeName: (ctx) => AddressScreen(),
             EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
+            ContactScreen.routeName: (ctx) => ContactScreen(),
           },
         ),
       ),
