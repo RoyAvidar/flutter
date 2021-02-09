@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/http_exception.dart';
 import '../models/address.dart';
-import '../widgets/address_item.dart';
 
 class Address with ChangeNotifier {
   //Address(this._authToken, this._expiryDate, this._userId);
@@ -40,6 +39,8 @@ class Address with ChangeNotifier {
           'cityName': address.cityName,
           'streetName': address.streetName,
           'streetNumber': address.streetNumber,
+          'floorNumber': address.floorNumber,
+          'apartment': address.apartment,
         }),
       );
       final newAddress = AddressItem(
@@ -47,6 +48,8 @@ class Address with ChangeNotifier {
         cityName: address.cityName,
         streetName: address.streetName,
         streetNumber: address.streetNumber,
+        floorNumber: address.floorNumber,
+        apartment: address.apartment,
       );
       // addressList.add(newAddress);
       _addressList.add(newAddress);
@@ -76,6 +79,8 @@ class Address with ChangeNotifier {
             cityName: addressData['cityName'],
             streetName: addressData['streetName'],
             streetNumber: addressData['streetNumber'],
+            floorNumber: addressData['floorNumber'],
+            apartment: addressData['apartment'],
           ),
         );
         _addressList = loadedAddress.reversed.toList();
@@ -95,6 +100,8 @@ class Address with ChangeNotifier {
             'cityName': newAddress.cityName,
             'streetName': newAddress.streetName,
             'streetNumber': newAddress.streetNumber,
+            'floorNumber': newAddress.floorNumber,
+            'apartment': newAddress.apartment,
           }));
       _addressList[addressIndex] = newAddress;
       notifyListeners();

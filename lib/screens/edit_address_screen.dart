@@ -23,6 +23,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     'cityName': '',
     'streetName': '',
     'streetNumber': '',
+    'floorNumber': '',
+    'apartment': '',
   };
 
   Future<void> _saveAddressForm() async {
@@ -77,6 +79,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
           'cityName': _editedAddress.cityName,
           'streetName': _editedAddress.streetName,
           'streetNumber': _editedAddress.streetNumber.toString(),
+          'floorNumber': _editedAddress.floorNumber.toString(),
+          'apartment': _editedAddress.apartment.toString(),
         };
       }
     }
@@ -122,6 +126,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           cityName: value,
                           streetName: _editedAddress.streetName,
                           streetNumber: _editedAddress.streetNumber,
+                          floorNumber: _editedAddress.floorNumber,
+                          apartment: _editedAddress.apartment,
                         );
                       },
                     ),
@@ -141,6 +147,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           cityName: _editedAddress.cityName,
                           streetName: value,
                           streetNumber: _editedAddress.streetNumber,
+                          floorNumber: _editedAddress.floorNumber,
+                          apartment: _editedAddress.apartment,
                         );
                       },
                     ),
@@ -164,6 +172,59 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           cityName: _editedAddress.cityName,
                           streetName: _editedAddress.streetName,
                           streetNumber: int.parse(value),
+                          floorNumber: _editedAddress.floorNumber,
+                          apartment: _editedAddress.apartment,
+                        );
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValues['floorNumber'],
+                      decoration: InputDecoration(labelText: 'Floor Number'),
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please provide a value';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedAddress = AddressItem(
+                          addressId: _editedAddress.addressId,
+                          cityName: _editedAddress.cityName,
+                          streetName: _editedAddress.streetName,
+                          streetNumber: _editedAddress.streetNumber,
+                          floorNumber: int.parse(value),
+                          apartment: _editedAddress.apartment,
+                        );
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValues['apartment'],
+                      decoration:
+                          InputDecoration(labelText: 'Apartment Number'),
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please provide a value';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedAddress = AddressItem(
+                          addressId: _editedAddress.addressId,
+                          cityName: _editedAddress.cityName,
+                          streetName: _editedAddress.streetName,
+                          streetNumber: _editedAddress.streetNumber,
+                          floorNumber: _editedAddress.floorNumber,
+                          apartment: int.parse(value),
                         );
                       },
                     ),
