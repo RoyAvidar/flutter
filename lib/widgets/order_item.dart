@@ -21,13 +21,13 @@ class _OrderItemState extends State<OrderItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       height:
-          _expanded ? min(widget.order.products.length * 20.0 + 110, 200) : 95,
+          _expanded ? min(widget.order.products.length * 40.0 + 110, 200) : 95,
       child: Card(
         margin: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text('\$${widget.order.amount.toStringAsFixed(2)}'),
+              title: Text('Total: \$${widget.order.amount.toStringAsFixed(2)}'),
               subtitle: Text(
                 DateFormat('dd/MM/yyyy  hh:mm').format(widget.order.dateTime),
               ),
@@ -44,29 +44,51 @@ class _OrderItemState extends State<OrderItem> {
               duration: Duration(milliseconds: 200),
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: _expanded
-                  ? min(widget.order.products.length * 20.0 + 15, 200)
+                  ? min(widget.order.products.length * 25.0 + 25, 100)
                   : 0,
               child: ListView(
                 children: widget.order.products
                     .map(
-                      (prod) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      (prod) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             prod.title,
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${prod.quantity} x \$${prod.price}',
-                            style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context).accentColor,
                             ),
                           ),
-                          Text('${prod.toppings.map((t) => t.name).join(",")}')
+                          SizedBox(height: 7),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Quantity: ${prod.quantity}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 7),
+                              Text(
+                                'Price: \$${prod.price}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 7),
+                              Text(
+                                'Toppings: ${prod.toppings.map((t) => t.name).join(",")} + \$${prod.toppings.map((t) => t.price).join(",")}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Divider(
+                                height: 8,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     )

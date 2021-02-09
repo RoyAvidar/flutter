@@ -39,6 +39,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
+                  ClearButton(cart: cart),
                   OrderButton(cart: cart)
                 ],
               ),
@@ -97,6 +98,41 @@ class _OrderButtonState extends State<OrderButton> {
                 _isLoading = false;
               });
               widget.cart.clearCart();
+            },
+      textColor: Theme.of(context).primaryColor,
+    );
+  }
+}
+
+class ClearButton extends StatefulWidget {
+  ClearButton({
+    Key key,
+    @required this.cart,
+  }) : super(key: key);
+
+  final Cart cart;
+
+  @override
+  _ClearButtonState createState() => _ClearButtonState();
+}
+
+class _ClearButtonState extends State<ClearButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: _isLoading ? CircularProgressIndicator() : Text('Clear Cart'),
+      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
+          ? null
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+              await Provider.of<Cart>(context, listen: false).clearCart();
+              setState(() {
+                _isLoading = false;
+              });
             },
       textColor: Theme.of(context).accentColor,
     );

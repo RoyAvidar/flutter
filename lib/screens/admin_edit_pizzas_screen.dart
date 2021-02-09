@@ -131,6 +131,7 @@ class _AdminEditPizzaScreenState extends State<AdminEditPizzaScreen> {
     Toppings().mushroom,
     Toppings().onion,
     Toppings().margherita,
+    Toppings().bacon,
   ];
   Topping _dropdownValue = _nameList.first;
 

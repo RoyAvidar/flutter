@@ -49,7 +49,7 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-            height: min(20.0 + 25, 100),
+            height: min(10.0 + 15, 50),
             child: Text('number: ${widget.addrs.streetNumber}'),
             alignment: Alignment.topLeft,
           ),
@@ -58,13 +58,13 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
-                  height: min(20.0 + 25, 100),
+                  height: min(10.0 + 15, 50),
                   child: Text('floor: ${widget.addrs.floorNumber}'),
                   alignment: Alignment.topLeft,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
-                  height: min(20.0 + 25, 100),
+                  height: min(10.0 + 15, 50),
                   child: Text('apartment: ${widget.addrs.apartment}'),
                   alignment: Alignment.topLeft,
                 ),
