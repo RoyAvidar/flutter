@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/topping.dart';
 
 class PizzaCircle extends StatefulWidget {
   @override
@@ -7,6 +8,16 @@ class PizzaCircle extends StatefulWidget {
 
 class _PizzaCircleState extends State<PizzaCircle> {
   String dropDownValue = 'one';
+
+  static final List<Topping> _toppList = [
+    Toppings().peperoni,
+    Toppings().bazil,
+    Toppings().mushroom,
+    Toppings().onion,
+    Toppings().margherita,
+    Toppings().bacon,
+  ];
+  Topping _dropdownValue = _toppList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -43,32 +54,33 @@ class _PizzaCircleState extends State<PizzaCircle> {
                   left: 10.0,
                 ),
               ],
+              overflow: Overflow.visible,
             ),
           ),
           SizedBox(height: 50),
           Text('Add a Topping'),
-          DropdownButton<String>(
-            value: dropDownValue,
+          DropdownButton<Topping>(
+            value: _dropdownValue,
             icon: Icon(Icons.arrow_downward),
             iconSize: 20,
             elevation: 20,
-            style: TextStyle(color: Theme.of(context).primaryColor),
+            style: TextStyle(color: Theme.of(context).backgroundColor),
             underline: Container(
               height: 2,
               color: Theme.of(context).accentColor,
             ),
-            onChanged: (String value) {
+            onChanged: (Topping value) {
               setState(() {
-                dropDownValue = value;
+                _dropdownValue = value;
               });
             },
-            items: <String>['one', 'two', 'three', 'four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+            items: [
+              for (Topping i in _toppList)
+                DropdownMenuItem(
+                  value: i,
+                  child: Text('${i.name}'),
+                ),
+            ],
           ),
           SizedBox(
             height: 25,

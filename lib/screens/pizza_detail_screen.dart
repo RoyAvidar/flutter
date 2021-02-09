@@ -17,7 +17,7 @@ class PizzaDetailScreen extends StatelessWidget {
       context,
       listen: false,
     ).findById(pizzaId);
-    final cart = Provider.of<Cart>(context, listen: false);
+
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
 
@@ -83,6 +83,7 @@ class PizzaDetailScreen extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
+            SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -95,28 +96,6 @@ class PizzaDetailScreen extends StatelessWidget {
                   },
                   child: Text('Edit Pizza'),
                 ),
-                SizedBox(width: 10),
-                RaisedButton(
-                  onPressed: () {
-                    cart.addItem(loadedPizza.id, loadedPizza.price,
-                        loadedPizza.title, loadedPizza.toppings);
-                    _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(
-                        content: Text('Added pizza to Cart!'),
-                        duration: Duration(seconds: 2),
-                        action: SnackBarAction(
-                          label: 'UNDO',
-                          onPressed: () {
-                            cart.removeSingleItem(loadedPizza.id);
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Add To Cart',
-                  ),
-                )
               ],
             )
           ],

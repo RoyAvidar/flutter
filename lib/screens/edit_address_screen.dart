@@ -15,6 +15,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     cityName: '',
     streetName: '',
     streetNumber: 0,
+    floorNumber: 0,
+    apartment: 0,
   );
   final _formKey = GlobalKey<FormState>();
   var _isLoading = false;
@@ -113,7 +115,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   children: <Widget>[
                     TextFormField(
                       initialValue: _initValues['cityName'],
-                      decoration: InputDecoration(labelText: 'City Name'),
+                      decoration: InputDecoration(
+                          labelText: 'City Name', border: OutlineInputBorder()),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -132,9 +135,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         );
                       },
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       initialValue: _initValues['streetName'],
-                      decoration: InputDecoration(labelText: 'Street Name'),
+                      decoration: InputDecoration(
+                          labelText: 'Street Name',
+                          border: OutlineInputBorder()),
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -153,9 +159,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         );
                       },
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       initialValue: _initValues['streetNumber'],
-                      decoration: InputDecoration(labelText: 'Street Number'),
+                      decoration: InputDecoration(
+                          labelText: 'Street Number',
+                          border: OutlineInputBorder()),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -178,9 +187,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         );
                       },
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       initialValue: _initValues['floorNumber'],
-                      decoration: InputDecoration(labelText: 'Floor Number'),
+                      decoration: InputDecoration(
+                          labelText: 'Floor Number',
+                          border: OutlineInputBorder()),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -203,10 +215,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         );
                       },
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       initialValue: _initValues['apartment'],
-                      decoration:
-                          InputDecoration(labelText: 'Apartment Number'),
+                      decoration: InputDecoration(
+                          labelText: 'Apartment Number',
+                          border: OutlineInputBorder()),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       validator: (value) {

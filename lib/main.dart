@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Colors.yellow[800],
             accentColor: Colors.red,
+            backgroundColor: Colors.green,
           ),
           home: authData.isAuth
               ? PizzaOverviewScreen()
