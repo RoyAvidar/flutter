@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/topping.dart';
+import '../providers/pizza.dart';
 
 class CartItem {
   final String id;
@@ -13,7 +14,7 @@ class CartItem {
     @required this.title,
     @required this.quantity,
     @required this.price,
-    @required this.toppings,
+    this.toppings,
   });
 }
 
@@ -34,6 +35,31 @@ class Cart with ChangeNotifier {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
+  }
+
+  void addSaleItem(
+      String saleId, double price, String title, List<Pizza> pizzas) {
+    if (_items.containsKey(saleId)) {
+      _items.update(saleId, (existingCartItem) {
+        return CartItem(
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          quantity: existingCartItem.quantity + 1,
+          price: existingCartItem.price,
+          toppings: existingCartItem.toppings,
+        );
+      });
+    } else {
+      _items.putIfAbsent(
+        saleId,
+        () => CartItem(
+          id: DateTime.now().toString(),
+          price: price,
+          title: title,
+          quantity: 1,
+        ),
+      );
+    }
   }
 
   void addItem(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/orders_screen.dart';
 import '../screens/admin_pizza_screen.dart';
+import '../screens/sales_overview_screen.dart';
 import '../providers/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,15 @@ class AppDrawer extends StatelessWidget {
             title: Text('Shop'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.payment),
+            title: Text('Sales'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(SalesOverviewScreen.routeName);
             },
           ),
           Divider(),
