@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/topping.dart';
+import '../models/sale.dart';
 
 class Pizza with ChangeNotifier {
   final String id;
@@ -11,6 +12,8 @@ class Pizza with ChangeNotifier {
   final String imageUrl;
   final List<Topping> toppings;
   bool isFavorite;
+  Sale sale;
+  bool isOnSale;
 
   Pizza({
     @required this.id,
@@ -20,6 +23,8 @@ class Pizza with ChangeNotifier {
     @required this.imageUrl,
     @required this.toppings,
     this.isFavorite = false,
+    this.isOnSale = false,
+    this.sale,
   });
 
   void _setFavValue(bool newValue) {

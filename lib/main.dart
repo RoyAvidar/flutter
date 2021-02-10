@@ -15,13 +15,13 @@ import './screens/personal_info_screen.dart';
 import './screens/address_screen.dart';
 import './screens/edit_address_screen.dart';
 import './screens/contact_screen.dart';
-import './screens/sales_overview_screen.dart';
+import './screens/admin_sale_screen.dart';
+
 import 'screens/about_us_screen.dart';
 import './providers/pizzas_provider.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
 import './providers/auth.dart';
-import './providers/sales.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,9 +44,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => Sales(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, previousOrders) => Orders(
@@ -92,7 +89,7 @@ class MyApp extends StatelessWidget {
             EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
             ContactScreen.routeName: (ctx) => ContactScreen(),
             AboutUsScreen.routName: (ctx) => AboutUsScreen(),
-            SalesOverviewScreen.routeName: (ctx) => SalesOverviewScreen(),
+            AdminSaleScreen.routeName: (ctx) => AdminSaleScreen(),
           },
         ),
       ),

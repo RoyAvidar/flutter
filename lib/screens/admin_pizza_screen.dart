@@ -5,6 +5,7 @@ import '../providers/pizzas_provider.dart';
 import '../widgets/admin_pizza_item.dart';
 import '../widgets/app_drawer.dart';
 import '../screens/admin_edit_pizzas_screen.dart';
+import '../screens/admin_sale_screen.dart';
 
 class AdminPizzaScreen extends StatelessWidget {
   static const routeName = '/admin-pizzas';
@@ -24,6 +25,11 @@ class AdminPizzaScreen extends StatelessWidget {
               icon: Icon(Icons.add),
               onPressed: () {
                 Navigator.of(context).pushNamed(AdminEditPizzaScreen.routeName);
+              }),
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).pushNamed(AdminSaleScreen.routeName);
               })
         ],
       ),
