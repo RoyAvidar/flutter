@@ -10,11 +10,21 @@ class Sale with ChangeNotifier {
   final List<Pizza> pizzas;
 
   Sale(
-    @required this.id,
-    @required this.title,
-    @required this.description,
-    @required this.price,
-    @required this.imageUrl,
-    @required this.pizzas,
+    this.id,
+    this.title,
+    this.description,
+    this.price,
+    this.imageUrl,
+    this.pizzas,
   );
+}
+
+class SalesList with ChangeNotifier {
+  final summersSale = Sale(
+      '1',
+      'Summer Sale',
+      'description',
+      79.99,
+      'http://www.pizzanearme.com/sites/default/files/field/image/2%20pizzas.jpg',
+      []);
 }
