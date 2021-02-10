@@ -32,7 +32,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment),
+            leading: Icon(Icons.shopping_bag),
             title: Text('Sales'),
             onTap: () {
               Navigator.of(context)
