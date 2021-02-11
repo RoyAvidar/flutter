@@ -27,7 +27,7 @@ class AdminPizzaScreen extends StatelessWidget {
                 Navigator.of(context).pushNamed(AdminEditPizzaScreen.routeName);
               }),
           IconButton(
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.add_box_outlined),
               onPressed: () {
                 Navigator.of(context).pushNamed(AdminSaleScreen.routeName);
               })
