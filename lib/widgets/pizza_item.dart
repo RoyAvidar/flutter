@@ -14,62 +14,73 @@ class PizzaItem extends StatelessWidget {
     final authData = Provider.of<Auth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: GridTile(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              PizzaDetailScreen.routeName,
-              arguments: pizza.id,
-            );
-          },
-          child: Hero(
-            tag: pizza.id,
-            child: FadeInImage(
-              placeholder: AssetImage('assets/images/pizza-placeholder.jpg'),
-              image: NetworkImage(pizza.imageUrl),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        footer: GridTileBar(
-          leading: IconButton(
-            icon: Icon(
-              pizza.isFavorite ? Icons.favorite : Icons.favorite_border,
-            ),
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              pizza.toggleFavorite(authData.token, authData.userId);
-            },
-          ),
-          backgroundColor: Colors.black54,
-          title: Text(
-            pizza.title,
-            textAlign: TextAlign.center,
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.shopping_cart),
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              cart.addItem(
-                pizza.id,
-                pizza.price,
-                pizza.title,
-                pizza.toppings,
-              );
-              Scaffold.of(context).hideCurrentSnackBar();
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text('Added pizza to Cart!'),
-                duration: Duration(seconds: 2),
-                action: SnackBarAction(
-                  label: 'UNDO',
-                  onPressed: () {
-                    cart.removeSingleItem(pizza.id);
-                  },
+      child: Stack(
+        children: [
+          GridTile(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  PizzaDetailScreen.routeName,
+                  arguments: pizza.id,
+                );
+              },
+              child: Hero(
+                tag: pizza.id,
+                child: FadeInImage(
+                  placeholder:
+                      AssetImage('assets/images/pizza-placeholder.jpg'),
+                  image: NetworkImage(pizza.imageUrl),
+                  fit: BoxFit.cover,
                 ),
-              ));
-            },
+              ),
+            ),
+            footer: GridTileBar(
+              leading: IconButton(
+                icon: Icon(
+                  pizza.isFavorite ? Icons.favorite : Icons.favorite_border,
+                ),
+                color: Theme.of(context).accentColor,
+                onPressed: () {
+                  pizza.toggleFavorite(authData.token, authData.userId);
+                },
+              ),
+              backgroundColor: Colors.black54,
+              title: Text(
+                pizza.title,
+                textAlign: TextAlign.center,
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                color: Theme.of(context).accentColor,
+                onPressed: () {
+                  cart.addItem(
+                    pizza.id,
+                    pizza.price,
+                    pizza.title,
+                    pizza.toppings,
+                  );
+                  Scaffold.of(context).hideCurrentSnackBar();
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Added pizza to Cart!'),
+                    duration: Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(pizza.id);
+                      },
+                    ),
+                  ));
+                },
+              ),
+            ),
           ),
-        ),
+          if (pizza.isOnSale)
+            Banner(
+              color: Colors.red,
+              message: 'Sale',
+              location: BannerLocation.topStart,
+            ),
+        ],
       ),
     );
   }

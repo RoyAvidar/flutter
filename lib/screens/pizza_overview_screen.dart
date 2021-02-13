@@ -10,6 +10,7 @@ import '../providers/pizzas_provider.dart';
 import '../widgets/app_drawer.dart';
 
 enum FilterOptions {
+  Sale,
   Favorites,
   All,
 }
@@ -20,7 +21,8 @@ class PizzaOverviewScreen extends StatefulWidget {
 }
 
 class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
-  var _showOnlyFavorites = false;
+  bool _showOnlyFavorites = false;
+  bool _showOnlySales = false;
   var _isInit = true;
   var _isLoading = false;
 
@@ -57,6 +59,8 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
               setState(() {
                 if (selectedValue == FilterOptions.Favorites) {
                   _showOnlyFavorites = true;
+                } else if (selectedValue == FilterOptions.Sale) {
+                  _showOnlySales = true;
                 } else {
                   _showOnlyFavorites = false;
                 }
@@ -71,6 +75,10 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
               PopupMenuItem(
                 child: Text('Show All'),
                 value: FilterOptions.All,
+              ),
+              PopupMenuItem(
+                child: Text('Show Sales'),
+                value: FilterOptions.Sale,
               ),
             ],
           ),
@@ -95,7 +103,7 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : PizzasGrid(_showOnlyFavorites),
+          : PizzasGrid(_showOnlyFavorites, _showOnlySales),
     );
   }
 }

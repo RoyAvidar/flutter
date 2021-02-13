@@ -21,16 +21,23 @@ class AdminPizzaScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Manage Pizzas'),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.of(context).pushNamed(AdminEditPizzaScreen.routeName);
-              }),
-          IconButton(
-              icon: Icon(Icons.add_box_outlined),
-              onPressed: () {
-                Navigator.of(context).pushNamed(AdminSaleScreen.routeName);
-              })
+          Tooltip(
+            message: 'add a new Pizza',
+            child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AdminEditPizzaScreen.routeName);
+                }),
+          ),
+          Tooltip(
+            message: 'add a new Sale',
+            child: IconButton(
+                icon: Icon(Icons.add_box_outlined),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AdminSaleScreen.routeName);
+                }),
+          )
         ],
       ),
       drawer: AppDrawer(),

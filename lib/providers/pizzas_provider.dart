@@ -75,6 +75,10 @@ class Pizzas with ChangeNotifier {
     return _items.where((pizzaItem) => pizzaItem.isFavorite).toList();
   }
 
+  List<Pizza> get saleItems {
+    return _items.where((pizzaItem) => pizzaItem.isOnSale);
+  }
+
   Future<void> fetchAndSetPizzas() async {
     var url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json?auth=$authToken';
@@ -97,6 +101,9 @@ class Pizzas with ChangeNotifier {
           price: pizzData['price'],
           isFavorite:
               favoriteData == null ? false : favoriteData[pizzId] ?? false,
+          isOnSale: pizzData['isOnSale'] != null ? pizzData['isOnSale'] : false,
+          salePrice:
+              pizzData['salePrice'] != null ? pizzData['salePrice'] : false,
           imageUrl: pizzData['imageUrl'],
           toppings: ((pizzData['toppings']) as List<dynamic>)
               .map((t) => Topping(t['name'], t['price']))

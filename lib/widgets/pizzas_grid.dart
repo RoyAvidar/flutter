@@ -5,8 +5,9 @@ import './pizza_item.dart';
 import '../providers/pizzas_provider.dart';
 
 class PizzasGrid extends StatelessWidget {
+  final bool showSales;
   final bool showFavs;
-  PizzasGrid(this.showFavs);
+  PizzasGrid(this.showFavs, this.showSales);
   @override
   Widget build(BuildContext context) {
     final pizzasData = Provider.of<Pizzas>(context);

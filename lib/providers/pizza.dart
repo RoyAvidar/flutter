@@ -13,6 +13,7 @@ class Pizza with ChangeNotifier {
   final List<Topping> toppings;
   bool isFavorite;
   Sale sale;
+  double salePrice;
   bool isOnSale;
 
   Pizza({
@@ -22,6 +23,7 @@ class Pizza with ChangeNotifier {
     @required this.price,
     @required this.imageUrl,
     @required this.toppings,
+    this.salePrice,
     this.isFavorite = false,
     this.isOnSale = false,
     this.sale,
@@ -50,6 +52,34 @@ class Pizza with ChangeNotifier {
       }
     } catch (error) {
       _setFavValue(oldStatus);
+      print(error);
+    }
+  }
+
+  void _setOnSaleValue(bool newValue) {
+    isOnSale = newValue;
+    notifyListeners();
+  }
+
+  Future<void> toggleIsOnSale(String token) async {
+    var url =
+        'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza.json?auth=$token';
+    final oldStatus = isOnSale;
+    isOnSale = !isOnSale;
+    notifyListeners();
+    try {
+      final response = await http.put(
+        url,
+        body: json.encode(
+          isOnSale,
+        ),
+      );
+      if (response.statusCode >= 400) {
+        _setOnSaleValue(oldStatus);
+      }
+    } catch (error) {
+      _setOnSaleValue(oldStatus);
+      print(error);
     }
   }
 }
