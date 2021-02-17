@@ -129,7 +129,7 @@ class _ClearButtonState extends State<ClearButton> {
               setState(() {
                 _isLoading = true;
               });
-              await Provider.of<Cart>(context, listen: false).clearCart();
+              Provider.of<Cart>(context, listen: false).clearCart();
               setState(() {
                 _isLoading = false;
               });

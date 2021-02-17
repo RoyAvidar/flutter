@@ -31,91 +31,94 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text('city: ${widget.addrs.cityName}'),
-            trailing: IconButton(
-              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text('city: ${widget.addrs.cityName}'),
+              trailing: IconButton(
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+              ),
+              subtitle: Text('street: ${widget.addrs.streetName}'),
             ),
-            subtitle: Text('street: ${widget.addrs.streetName}'),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-            height: min(10.0 + 15, 50),
-            child: Text('number: ${widget.addrs.streetNumber}'),
-            alignment: Alignment.topLeft,
-          ),
-          if (_expanded)
-            Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
-                  height: min(10.0 + 15, 50),
-                  child: Text('floor: ${widget.addrs.floorNumber}'),
-                  alignment: Alignment.topLeft,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
-                  height: min(10.0 + 15, 50),
-                  child: Text('apartment: ${widget.addrs.apartment}'),
-                  alignment: Alignment.topLeft,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          EditAddressScreen.routeName,
-                          arguments: widget.addressId,
-                        );
-                      },
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        return showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text('Are you sure?'),
-                            content: Text(
-                                'Do you want to remove the address from your Address List?'),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('No'),
-                                onPressed: () {
-                                  Navigator.of(ctx).pop(false);
-                                },
-                              ),
-                              FlatButton(
-                                child: Text('Yes'),
-                                onPressed: () {
-                                  Provider.of<Address>(context, listen: false)
-                                      .deleteAddress(widget.addressId);
-                                  Navigator.of(ctx).pop(true);
-                                },
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                      color: Theme.of(context).errorColor,
-                    ),
-                  ],
-                ),
-              ],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+              height: min(10.0 + 15, 50),
+              child: Text('number: ${widget.addrs.streetNumber}'),
+              alignment: Alignment.topLeft,
             ),
-        ],
+            if (_expanded)
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
+                    height: min(10.0 + 15, 50),
+                    child: Text('floor: ${widget.addrs.floorNumber}'),
+                    alignment: Alignment.topLeft,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
+                    height: min(10.0 + 15, 50),
+                    child: Text('apartment: ${widget.addrs.apartment}'),
+                    alignment: Alignment.topLeft,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            EditAddressScreen.routeName,
+                            arguments: widget.addressId,
+                          );
+                        },
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          return showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text('Are you sure?'),
+                              content: Text(
+                                  'Do you want to remove the address from your Address List?'),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('No'),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text('Yes'),
+                                  onPressed: () {
+                                    Provider.of<Address>(context, listen: false)
+                                        .deleteAddress(widget.addressId);
+                                    Navigator.of(ctx).pop(true);
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                        color: Theme.of(context).errorColor,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }

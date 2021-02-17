@@ -30,8 +30,9 @@ class OrdersScreen extends StatelessWidget {
               return Consumer<Orders>(
                 builder: (ctx, ordersData, chid) => ListView.builder(
                   itemCount: ordersData.orders.length,
-                  itemBuilder: (ctx, i) =>
-                      OrderItem(order: ordersData.orders[i]),
+                  itemBuilder: (ctx, i) => OrderItem(
+                    order: ordersData.orders[i],
+                  ),
                 ),
               );
             }

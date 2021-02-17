@@ -60,8 +60,9 @@ class AddressScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: addressData.addressCount,
                       itemBuilder: (ctx, i) => AddressItemWidget(
-                          addressData.addressList[i],
-                          addressData.addressList[i].addressId),
+                        addressData.addressList[i],
+                        addressData.addressList[i].addressId,
+                      ),
                     ),
                   );
                 }
