@@ -61,6 +61,7 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
   }
 
   void addItem(
