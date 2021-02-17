@@ -76,7 +76,7 @@ class Pizzas with ChangeNotifier {
   }
 
   List<Pizza> get saleItems {
-    return _items.where((pizzaItem) => pizzaItem.isOnSale);
+    return _items.where((pizzaItem) => pizzaItem.isOnSale).toList();
   }
 
   Future<void> fetchAndSetPizzas() async {
@@ -102,8 +102,9 @@ class Pizzas with ChangeNotifier {
           isFavorite:
               favoriteData == null ? false : favoriteData[pizzId] ?? false,
           isOnSale: pizzData['isOnSale'] != null ? pizzData['isOnSale'] : false,
-          salePrice:
-              pizzData['salePrice'] != null ? pizzData['salePrice'] : false,
+          salePrice: pizzData['salePrice'] != null
+              ? double.parse(pizzData['salePrice'])
+              : null,
           imageUrl: pizzData['imageUrl'],
           toppings: ((pizzData['toppings']) as List<dynamic>)
               .map((t) => Topping(t['name'], t['price']))

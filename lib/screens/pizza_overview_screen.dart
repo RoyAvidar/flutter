@@ -63,22 +63,23 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
                   _showOnlySales = true;
                 } else {
                   _showOnlyFavorites = false;
+                  _showOnlySales = false;
                 }
               });
             },
             icon: Icon(Icons.more_vert),
             itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only Favorites'),
+                child: Text('Show Favorites'),
                 value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text('Show All'),
-                value: FilterOptions.All,
               ),
               PopupMenuItem(
                 child: Text('Show Sales'),
                 value: FilterOptions.Sale,
+              ),
+              PopupMenuItem(
+                child: Text('Show All'),
+                value: FilterOptions.All,
               ),
             ],
           ),

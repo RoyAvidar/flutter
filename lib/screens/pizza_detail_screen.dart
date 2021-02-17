@@ -76,13 +76,19 @@ class PizzaDetailScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              '\$${loadedPizza.price}',
-              style: TextStyle(
-                color: Theme.of(context).accentColor,
-                fontSize: 15,
-              ),
-            ),
+            loadedPizza.isOnSale
+                ? Text(
+                    'ON SALE: \$${loadedPizza.salePrice}',
+                    style: TextStyle(
+                        color: Theme.of(context).accentColor, fontSize: 15),
+                  )
+                : Text(
+                    '\$${loadedPizza.price}',
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontSize: 15,
+                    ),
+                  ),
             SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -38,7 +38,7 @@ class Cart with ChangeNotifier {
   }
 
   void addSaleItem(
-      String saleId, double price, String title, List<Pizza> pizzas) {
+      String saleId, double salePrice, String title, List<Topping> toppings) {
     if (_items.containsKey(saleId)) {
       _items.update(saleId, (existingCartItem) {
         return CartItem(
@@ -54,9 +54,10 @@ class Cart with ChangeNotifier {
         saleId,
         () => CartItem(
           id: DateTime.now().toString(),
-          price: price,
+          price: salePrice,
           title: title,
           quantity: 1,
+          toppings: toppings,
         ),
       );
     }

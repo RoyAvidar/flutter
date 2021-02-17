@@ -11,7 +11,10 @@ class PizzasGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pizzasData = Provider.of<Pizzas>(context);
-    final pizzas = showFavs ? pizzasData.favoriteItems : pizzasData.items;
+    final pizzas = showFavs
+        ? pizzasData.favoriteItems
+        : (showSales ? pizzasData.saleItems : pizzasData.items);
+
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: pizzas.length,
