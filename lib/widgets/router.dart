@@ -11,7 +11,7 @@ import '../screens/contact_screen.dart';
 import '../screens/about_us_screen.dart';
 import '../screens/admin_sale_screen.dart';
 
-class routes {
+class Routes {
   final routers = {
     PizzaDetailScreen.routeName: (ctx) => PizzaDetailScreen(),
     PizzaEditScreen.routeName: (ctx) => PizzaEditScreen(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/topping.dart';
-import '../providers/pizza.dart';
 
 class CartItem {
   final String id;

@@ -28,7 +28,7 @@ class _AdminSaleScreenState extends State<AdminSaleScreen> {
         var url =
             'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/${pizza.id}.json?auth=$authToken';
         try {
-          final response = await http.put(
+          await http.put(
             url,
             body: json.encode({
               'isOnSale': true,
