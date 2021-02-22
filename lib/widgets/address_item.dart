@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/address.dart';
 import '../screens/edit_address_screen.dart';
 import '../models/address.dart';
@@ -51,9 +52,11 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
                   'street: ${widget.addrs.streetName}, number: ${widget.addrs.streetNumber}'),
               isThreeLine: true,
               onTap: () {
-                print(widget.addrs);
+                final chosenAddress = widget.addrs;
+                print(chosenAddress.addressId);
+                //add this address to Cart so we can use AddOrder in cart screen
                 Navigator.of(context).pop();
-                return widget.addrs;
+                return chosenAddress;
               },
             ),
             if (_expanded)
