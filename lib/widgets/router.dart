@@ -10,6 +10,7 @@ import '../screens/edit_address_screen.dart';
 import '../screens/contact_screen.dart';
 import '../screens/about_us_screen.dart';
 import '../screens/admin_sale_screen.dart';
+import '../screens/pick_address_screen.dart';
 
 class Routes {
   final routers = {
@@ -25,5 +26,6 @@ class Routes {
     ContactScreen.routeName: (ctx) => ContactScreen(),
     AboutUsScreen.routName: (ctx) => AboutUsScreen(),
     AdminSaleScreen.routeName: (ctx) => AdminSaleScreen(),
+    PickAddressScreen.routeName: (ctx) => PickAddressScreen(),
   };
 }

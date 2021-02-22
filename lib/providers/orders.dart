@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza/models/address.dart';
 import 'package:flutter_pizza/models/topping.dart';
 import 'package:http/http.dart' as http; //avoid name clash
 
@@ -10,12 +11,14 @@ class OrderItem {
   final double amount; // quantity of item * price
   final List<CartItem> products;
   final DateTime dateTime;
+  final AddressItem address;
 
   OrderItem({
     @required this.id,
     @required this.amount,
     @required this.products,
     @required this.dateTime,
+    @required this.address,
   });
 }
 
@@ -45,6 +48,7 @@ class Orders with ChangeNotifier {
           id: orderId,
           amount: orderData['amount'],
           dateTime: DateTime.parse(orderData['date']),
+          address: orderData['address'],
           products: (orderData['products'] as List<dynamic>)
               .map((item) => CartItem(
                     id: item['id'],
@@ -63,7 +67,8 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addOrder(List<CartItem> cartProducts, double total) async {
+  Future<void> addOrder(List<CartItem> cartProducts, double total,
+      AddressItem userAddress) async {
     final timestamp = DateTime.now();
     final url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
@@ -73,6 +78,7 @@ class Orders with ChangeNotifier {
         {
           'amount': total,
           'date': timestamp.toIso8601String(),
+          'address': userAddress,
           'products': cartProducts
               .map((cp) => {
                     'id': cp.id,
@@ -96,6 +102,7 @@ class Orders with ChangeNotifier {
           id: json.decode(response.body)['name'],
           amount: total,
           dateTime: timestamp,
+          address: userAddress,
           products: cartProducts,
         ));
     notifyListeners();

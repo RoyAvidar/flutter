@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza/screens/pick_address_screen.dart';
 import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
 import '../widgets/cart_item.dart';
@@ -90,10 +91,11 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = true;
               });
-              await Provider.of<Orders>(context, listen: false).addOrder(
-                widget.cart.items.values.toList(),
-                widget.cart.totalAmount,
-              );
+              Navigator.of(context).pushNamed(PickAddressScreen.routeName);
+              // await Provider.of<Orders>(context, listen: false).addOrder(
+              //   widget.cart.items.values.toList(),
+              //   widget.cart.totalAmount,
+              // );
               setState(() {
                 _isLoading = false;
               });

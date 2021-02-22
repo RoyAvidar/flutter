@@ -47,13 +47,14 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
                   });
                 },
               ),
-              subtitle: Text('street: ${widget.addrs.streetName}'),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: min(10.0 + 15, 50),
-              child: Text('number: ${widget.addrs.streetNumber}'),
-              alignment: Alignment.topLeft,
+              subtitle: Text(
+                  'street: ${widget.addrs.streetName}, number: ${widget.addrs.streetNumber}'),
+              isThreeLine: true,
+              onTap: () {
+                print(widget.addrs);
+                Navigator.of(context).pop();
+                return widget.addrs;
+              },
             ),
             if (_expanded)
               Column(

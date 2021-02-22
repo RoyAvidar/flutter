@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/topping.dart';
 
 class CartItem {
@@ -6,6 +7,7 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
+
   final List<Topping> toppings;
 
   CartItem({
