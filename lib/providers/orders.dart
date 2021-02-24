@@ -27,7 +27,11 @@ class Orders with ChangeNotifier {
   final String authToken;
   final String userId;
 
-  Orders(this.authToken, this.userId, this._orders);
+  Orders(
+    this.authToken,
+    this.userId,
+    this._orders,
+  );
 
   List<OrderItem> get orders {
     return [..._orders];
@@ -110,7 +114,7 @@ class Orders with ChangeNotifier {
 
   AddressItem addAddress(AddressItem pickedAddress) {
     final chosenAddress = pickedAddress;
-    print(pickedAddress);
+    print(chosenAddress);
     return chosenAddress;
   }
 }
