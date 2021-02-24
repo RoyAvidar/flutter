@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/orders.dart';
 import '../providers/address.dart';
 import '../screens/edit_address_screen.dart';
 import '../models/address.dart';
@@ -54,8 +55,10 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               isThreeLine: true,
               onTap: () {
                 final chosenAddress = widget.addrs;
+                Provider.of<Orders>(context, listen: false)
+                    .addAddress(chosenAddress);
                 Navigator.of(context).pop();
-                return chosenAddress;
+                return;
               },
             ),
             if (_expanded)
