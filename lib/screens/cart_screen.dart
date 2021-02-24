@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza/models/address.dart';
 import 'package:flutter_pizza/screens/pick_address_screen.dart';
 import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
 import '../widgets/cart_item.dart';
+import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -69,9 +71,11 @@ class OrderButton extends StatefulWidget {
   const OrderButton({
     Key key,
     @required this.cart,
+    this.pickedAddress,
   }) : super(key: key);
 
   final Cart cart;
+  final AddressItem pickedAddress;
 
   @override
   _OrderButtonState createState() => _OrderButtonState();
@@ -91,10 +95,12 @@ class _OrderButtonState extends State<OrderButton> {
                 _isLoading = true;
               });
               Navigator.of(context).pushNamed(PickAddressScreen.routeName);
-              // await Provider.of<Orders>(context, listen: false).addOrder(
-              //   widget.cart.items.values.toList(),
-              //   widget.cart.totalAmount,
-              // );
+
+              await Provider.of<Orders>(context, listen: false).addOrder(
+                widget.cart.items.values.toList(),
+                widget.cart.totalAmount,
+                widget.pickedAddress,
+              );
               setState(() {
                 _isLoading = false;
               });

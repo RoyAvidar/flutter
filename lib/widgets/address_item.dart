@@ -17,6 +17,7 @@ class AddressItemWidget extends StatefulWidget {
   AddressItemWidget(
     this.addrs,
     this.addressId,
+
     // this.addressId,
     // this.cityName,
     // this.streetName,
@@ -53,8 +54,6 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               isThreeLine: true,
               onTap: () {
                 final chosenAddress = widget.addrs;
-                print(chosenAddress.addressId);
-                //add this address to Cart so we can use AddOrder in cart screen
                 Navigator.of(context).pop();
                 return chosenAddress;
               },

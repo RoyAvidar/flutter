@@ -72,13 +72,14 @@ class Orders with ChangeNotifier {
     final timestamp = DateTime.now();
     final url =
         'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
+    final pickedAddress = addAddress(userAddress);
     final response = await http.post(
       url,
       body: json.encode(
         {
           'amount': total,
           'date': timestamp.toIso8601String(),
-          'address': userAddress,
+          'address': pickedAddress,
           'products': cartProducts
               .map((cp) => {
                     'id': cp.id,
@@ -102,9 +103,15 @@ class Orders with ChangeNotifier {
           id: json.decode(response.body)['name'],
           amount: total,
           dateTime: timestamp,
-          address: userAddress,
+          address: pickedAddress,
           products: cartProducts,
         ));
     notifyListeners();
+  }
+
+  AddressItem addAddress(AddressItem pickedAddress) {
+    final chosenAddress = pickedAddress;
+    print(pickedAddress);
+    return chosenAddress;
   }
 }
