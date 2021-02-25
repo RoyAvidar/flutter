@@ -113,8 +113,8 @@ class Orders with ChangeNotifier {
   }
 
   AddressItem addAddress(AddressItem pickedAddress) {
-    final chosenAddress = pickedAddress;
-    print(chosenAddress);
-    return chosenAddress;
+    final userAddress = pickedAddress;
+    print(userAddress);
+    return userAddress;
   }
 }

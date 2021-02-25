@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza/models/address.dart';
+
 import 'package:flutter_pizza/screens/pick_address_screen.dart';
 import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
@@ -95,6 +96,9 @@ class _OrderButtonState extends State<OrderButton> {
                 _isLoading = true;
               });
               Navigator.of(context).pushNamed(PickAddressScreen.routeName);
+              if (widget.pickedAddress == null) {
+                return Text('pick an address');
+              }
 
               await Provider.of<Orders>(context, listen: false).addOrder(
                 widget.cart.items.values.toList(),
