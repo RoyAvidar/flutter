@@ -95,19 +95,22 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = true;
               });
-              Navigator.of(context).pushNamed(PickAddressScreen.routeName);
-              if (widget.pickedAddress == null) {
+              final address = await Navigator.of(context)
+                  .pushNamed(PickAddressScreen.routeName);
+              print(address);
+              if (address == null) {
                 return Text('pick an address');
               }
 
               await Provider.of<Orders>(context, listen: false).addOrder(
                 widget.cart.items.values.toList(),
                 widget.cart.totalAmount,
-                widget.pickedAddress,
+                address,
               );
               setState(() {
                 _isLoading = false;
               });
+
               widget.cart.clearCart();
             },
       textColor: Theme.of(context).primaryColor,

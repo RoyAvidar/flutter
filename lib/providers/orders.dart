@@ -52,7 +52,14 @@ class Orders with ChangeNotifier {
           id: orderId,
           amount: orderData['amount'],
           dateTime: DateTime.parse(orderData['date']),
-          address: orderData['address'],
+          address: AddressItem(
+            addressId: orderData['address']['addressId'],
+            apartment: orderData['address']['apartment'],
+            cityName: orderData['address']['cityName'],
+            floorNumber: orderData['address']['floorNumber'],
+            streetName: orderData['address']['streetName'],
+            streetNumber: orderData['address']['streetNumber'],
+          ),
           products: (orderData['products'] as List<dynamic>)
               .map((item) => CartItem(
                     id: item['id'],
@@ -82,7 +89,14 @@ class Orders with ChangeNotifier {
         {
           'amount': total,
           'date': timestamp.toIso8601String(),
-          'address': userAddress,
+          'address': {
+            'addressId': userAddress.addressId,
+            'cityName': userAddress.cityName,
+            'streetName': userAddress.streetName,
+            'streetNumber': userAddress.streetNumber,
+            'floorNumber': userAddress.floorNumber,
+            'apartment': userAddress.apartment,
+          },
           'products': cartProducts
               .map((cp) => {
                     'id': cp.id,
@@ -110,11 +124,5 @@ class Orders with ChangeNotifier {
           products: cartProducts,
         ));
     notifyListeners();
-  }
-
-  AddressItem addAddress(AddressItem pickedAddress) {
-    final userAddress = pickedAddress;
-    print(userAddress);
-    return userAddress;
   }
 }

@@ -87,6 +87,7 @@ class _OrderItemState extends State<OrderItem> {
                               Divider(
                                 height: 8,
                               ),
+                              Text('Address: ${widget.order.address.cityName}')
                             ],
                           ),
                         ],
