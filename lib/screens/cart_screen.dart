@@ -97,7 +97,6 @@ class _OrderButtonState extends State<OrderButton> {
               });
               final address = await Navigator.of(context)
                   .pushNamed(PickAddressScreen.routeName);
-              print(address);
               if (address == null) {
                 return Text('pick an address');
               }
