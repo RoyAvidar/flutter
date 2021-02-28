@@ -119,7 +119,7 @@ class _CartItemState extends State<CartItem> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                       child: Text(
-                          'Toppings Pirce: ${widget.toppings.map((t) => t.price).join(",")}'),
+                          'Toppings Pirce: \$${widget.toppings.map((t) => t.price).join(",")}'),
                       alignment: Alignment.topLeft,
                     ),
                   ],
