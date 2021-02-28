@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/pizzas_provider.dart';
+import '../providers/cart.dart';
 import '../models/topping.dart';
 
 class PizzaCircle extends StatefulWidget {
@@ -21,6 +25,10 @@ class _PizzaCircleState extends State<PizzaCircle> {
 
   @override
   Widget build(BuildContext context) {
+    final pizzaId = ModalRoute.of(context).settings.arguments as String;
+    final cart = Provider.of<Cart>(context, listen: false);
+    final loadedPizza =
+        Provider.of<Pizzas>(context, listen: false).findById(pizzaId);
     Widget bigCircle = Container(
       width: 300,
       height: 300,
@@ -64,7 +72,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
             icon: Icon(Icons.arrow_downward),
             iconSize: 20,
             elevation: 20,
-            style: TextStyle(color: Theme.of(context).backgroundColor),
+            style: TextStyle(color: Theme.of(context).primaryColor),
             underline: Container(
               height: 2,
               color: Theme.of(context).accentColor,
@@ -100,7 +108,25 @@ class _PizzaCircleState extends State<PizzaCircle> {
               RaisedButton(
                 elevation: 15,
                 padding: EdgeInsets.all(10),
-                onPressed: () {},
+                onPressed: () {
+                  cart.addItem(
+                    loadedPizza.id,
+                    loadedPizza.price,
+                    loadedPizza.title,
+                    loadedPizza.toppings,
+                  );
+                  Scaffold.of(context).hideCurrentSnackBar();
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Added pizza to Cart!'),
+                    duration: Duration(seconds: 1),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(loadedPizza.id);
+                      },
+                    ),
+                  ));
+                },
                 child: Text(
                   'add to cart',
                   style: TextStyle(fontSize: 12),
