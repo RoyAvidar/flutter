@@ -54,7 +54,6 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               isThreeLine: true,
               onTap: () {
                 final chosenAddress = widget.addrs;
-
                 Navigator.of(context).pop(chosenAddress);
                 return;
               },
