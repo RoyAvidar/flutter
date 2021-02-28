@@ -26,7 +26,10 @@ class AddressScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Add Address',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
                   IconButton(
                     icon: Icon(Icons.add_box_outlined),

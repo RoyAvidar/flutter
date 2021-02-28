@@ -52,7 +52,12 @@ class _PizzaOverviewScreenState extends State<PizzaOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pizza Time!'),
+        title: Text(
+          'Pizza\'Le',
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+          ),
+        ),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
