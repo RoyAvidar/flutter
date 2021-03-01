@@ -9,6 +9,7 @@ import '../models/address.dart';
 class AddressItemWidget extends StatefulWidget {
   final AddressItem addrs;
   final String addressId;
+  final bool isPicking;
 
   // final String cityName;
   // final String streetName;
@@ -17,6 +18,7 @@ class AddressItemWidget extends StatefulWidget {
   AddressItemWidget(
     this.addrs,
     this.addressId,
+    this.isPicking,
 
     // this.addressId,
     // this.cityName,
@@ -33,6 +35,7 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isPicking = ModalRoute.of(context).settings.arguments as bool;
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Card(
@@ -54,8 +57,12 @@ class _AddressItemWidgetState extends State<AddressItemWidget> {
               isThreeLine: true,
               onTap: () {
                 final chosenAddress = widget.addrs;
-                Navigator.of(context).pop(chosenAddress);
-                return;
+
+                if (isPicking == null) {
+                  return;
+                } else {
+                  Navigator.of(context).pop(chosenAddress);
+                }
               },
             ),
             if (_expanded)

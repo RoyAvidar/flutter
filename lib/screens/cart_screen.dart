@@ -84,6 +84,7 @@ class OrderButton extends StatefulWidget {
 
 class _OrderButtonState extends State<OrderButton> {
   var _isLoading = false;
+  bool isPicking = true;
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +96,10 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = true;
               });
-              final address = await Navigator.of(context)
-                  .pushNamed(PickAddressScreen.routeName);
+              final address = await Navigator.of(context).pushNamed(
+                PickAddressScreen.routeName,
+                arguments: isPicking,
+              );
               if (address == null) {
                 return Text('pick an address');
               }

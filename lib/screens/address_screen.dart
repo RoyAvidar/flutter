@@ -10,6 +10,7 @@ class AddressScreen extends StatelessWidget {
   static const routeName = '/address';
   @override
   Widget build(BuildContext context) {
+    bool isPicking = false;
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Address'),
@@ -65,6 +66,7 @@ class AddressScreen extends StatelessWidget {
                       itemBuilder: (ctx, i) => AddressItemWidget(
                         addressData.addressList[i],
                         addressData.addressList[i].addressId,
+                        isPicking,
                       ),
                     ),
                   );
