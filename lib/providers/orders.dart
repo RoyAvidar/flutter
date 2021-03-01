@@ -78,7 +78,7 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addOrder(List<CartItem> cartProducts, double total,
+  Future<OrderItem> addOrder(List<CartItem> cartProducts, double total,
       AddressItem userAddress) async {
     final timestamp = DateTime.now();
     final url =
@@ -114,15 +114,15 @@ class Orders with ChangeNotifier {
         },
       ),
     );
-    _orders.insert(
-        0,
-        OrderItem(
-          id: json.decode(response.body)['name'],
-          amount: total,
-          dateTime: timestamp,
-          address: userAddress,
-          products: cartProducts,
-        ));
+    final OrderItem order = OrderItem(
+      id: json.decode(response.body)['name'],
+      amount: total,
+      dateTime: timestamp,
+      address: userAddress,
+      products: cartProducts,
+    );
+    _orders.insert(0, order);
     notifyListeners();
+    return order;
   }
 }

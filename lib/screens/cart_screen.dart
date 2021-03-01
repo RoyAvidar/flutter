@@ -105,7 +105,8 @@ class _OrderButtonState extends State<OrderButton> {
                 return Text('pick an address');
               }
 
-              await Provider.of<Orders>(context, listen: false).addOrder(
+              final orderItem =
+                  await Provider.of<Orders>(context, listen: false).addOrder(
                 widget.cart.items.values.toList(),
                 widget.cart.totalAmount,
                 address,
@@ -114,8 +115,12 @@ class _OrderButtonState extends State<OrderButton> {
                 _isLoading = false;
               });
               widget.cart.clearCart();
-              Navigator.of(context)
-                  .pushNamed(OrderConfirmationScreen.routeName);
+              print(orderItem);
+              Navigator.pushNamed(
+                context,
+                OrderConfirmationScreen.routeName,
+                arguments: address,
+              );
             },
       textColor: Theme.of(context).primaryColor,
     );
