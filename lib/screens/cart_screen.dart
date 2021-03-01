@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza/models/address.dart';
-
-import 'package:flutter_pizza/screens/pick_address_screen.dart';
-import '../providers/cart.dart' show Cart;
 import 'package:provider/provider.dart';
-import '../widgets/cart_item.dart';
+
+import '../screens/order_confirmation_screen.dart';
+import '../screens/pick_address_screen.dart';
 import '../providers/orders.dart';
+import '../providers/cart.dart' show Cart;
+import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -112,8 +113,9 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = false;
               });
-
               widget.cart.clearCart();
+              Navigator.of(context)
+                  .pushNamed(OrderConfirmationScreen.routeName);
             },
       textColor: Theme.of(context).primaryColor,
     );

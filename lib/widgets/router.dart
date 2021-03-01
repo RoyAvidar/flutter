@@ -11,6 +11,7 @@ import '../screens/contact_screen.dart';
 import '../screens/about_us_screen.dart';
 import '../screens/admin_sale_screen.dart';
 import '../screens/pick_address_screen.dart';
+import '../screens/order_confirmation_screen.dart';
 
 class Routes {
   final routers = {
@@ -27,5 +28,6 @@ class Routes {
     AboutUsScreen.routName: (ctx) => AboutUsScreen(),
     AdminSaleScreen.routeName: (ctx) => AdminSaleScreen(),
     PickAddressScreen.routeName: (ctx) => PickAddressScreen(),
+    OrderConfirmationScreen.routeName: (ctx) => OrderConfirmationScreen(),
   };
 }
