@@ -52,7 +52,10 @@ class OrderConfirmationScreen extends StatelessWidget {
             },
           ),
           SizedBox(height: 15),
-          Text('Have questions? Just reply to this email'),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Have any questions? Just reply to this email'),
+          ),
         ],
       ),
     );
