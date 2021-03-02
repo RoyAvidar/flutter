@@ -66,7 +66,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                  '${prod.toppings.map((t) => t.name).join(",")}'),
+                                  '+ ${prod.toppings.map((t) => t.name).join(",")}'),
                               Text(
                                   '\$ ${prod.toppings.map((t) => t.price).join(",")}'),
                             ],
@@ -93,17 +93,17 @@ class OrderConfirmationScreen extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.home),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/');
-            },
-          ),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushNamed(OrdersScreen.routeName);
             },
             child: Text('Go to My Orders'),
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/');
+            },
           ),
         ],
       ),

@@ -11,8 +11,6 @@ class PizzaCircle extends StatefulWidget {
 }
 
 class _PizzaCircleState extends State<PizzaCircle> {
-  String dropDownValue = 'one';
-
   static final List<Topping> _toppList = [
     Toppings().peperoni,
     Toppings().bazil,
@@ -22,6 +20,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
     Toppings().bacon,
   ];
   Topping _dropdownValue = _toppList.first;
+  List<Topping> pickedValues = [];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 bigCircle,
                 Positioned(
                   child: CircleButton(
-                    onTap: () => print("Coolio"),
+                    //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet,
                     iconData: Icons.local_pizza,
                   ),
                   top: 120.0,
@@ -80,6 +79,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
             onChanged: (Topping value) {
               setState(() {
                 _dropdownValue = value;
+                pickedValues.insert(0, _dropdownValue);
               });
             },
             items: [
