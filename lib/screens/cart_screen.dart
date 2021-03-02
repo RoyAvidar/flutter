@@ -119,7 +119,7 @@ class _OrderButtonState extends State<OrderButton> {
               Navigator.pushNamed(
                 context,
                 OrderConfirmationScreen.routeName,
-                arguments: address,
+                arguments: orderItem,
               );
             },
       textColor: Theme.of(context).primaryColor,
