@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/orders_screen.dart';
 import '../providers/orders.dart';
 import '../widgets/app_drawer.dart';
 
@@ -54,12 +55,37 @@ class OrderConfirmationScreen extends StatelessWidget {
                       (prod) => Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('${prod.title}'),
-                          Text('${prod.price}'),
-                          Text('${prod.quantity}'),
-                          Text('${prod.toppings.map((t) => t.name).join(",")}'),
-                          Text(
-                              '${prod.toppings.map((t) => t.price).join(",")}'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text('${prod.title}'),
+                              Text('\$ ${prod.price}'),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                  '${prod.toppings.map((t) => t.name).join(",")}'),
+                              Text(
+                                  '\$ ${prod.toppings.map((t) => t.price).join(",")}'),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text('Quantity: '),
+                              Text('${prod.quantity}'),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text('Total: '),
+                              Text('Total: \$ ${prod.price * prod.quantity}'),
+                            ],
+                          ),
                         ],
                       ),
                     )
@@ -74,8 +100,10 @@ class OrderConfirmationScreen extends StatelessWidget {
             },
           ),
           ElevatedButton(
-            onPressed: () {},
-            child: Text('Have any questions? Just reply to this email'),
+            onPressed: () {
+              Navigator.of(context).pushNamed(OrdersScreen.routeName);
+            },
+            child: Text('Go to My Orders'),
           ),
         ],
       ),

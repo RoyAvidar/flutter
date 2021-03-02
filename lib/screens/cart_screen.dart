@@ -115,7 +115,6 @@ class _OrderButtonState extends State<OrderButton> {
                 _isLoading = false;
               });
               widget.cart.clearCart();
-              print(orderItem);
               Navigator.pushNamed(
                 context,
                 OrderConfirmationScreen.routeName,
