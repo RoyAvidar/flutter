@@ -188,7 +188,7 @@ class Pizzas with ChangeNotifier {
     existingPizza = null;
   }
 
-  Future<void> addTopping(
+  Future<void> editTopping(
       String pizzaId, Topping newTopping, Pizza oldPizza) async {
     final pizzIndex = _items.indexWhere((pizz) => pizz.id == pizzaId);
     if (pizzIndex >= 0) {

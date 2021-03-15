@@ -49,7 +49,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
                     //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet with an AddTopping function,
                     onTap: () {
                       Provider.of<Pizzas>(context, listen: false)
-                          .addTopping(pizzaId, pickedValues, loadedPizza);
+                          .editTopping(pizzaId, pickedValues, loadedPizza);
                     },
                     iconData: Icons.local_pizza,
                   ),
