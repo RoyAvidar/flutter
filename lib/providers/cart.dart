@@ -122,21 +122,4 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
-
-  void addTopping(String pizzaId, List<Topping> newTopping) {
-    if (!_items.containsKey(pizzaId)) {
-      return;
-    } else {
-      _items.update(
-        pizzaId,
-        (existingCartItem) => CartItem(
-          id: existingCartItem.id,
-          title: existingCartItem.title,
-          quantity: existingCartItem.quantity,
-          price: existingCartItem.price,
-          toppings: newTopping,
-        ),
-      );
-    }
-  }
 }

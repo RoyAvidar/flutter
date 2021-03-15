@@ -187,4 +187,28 @@ class Pizzas with ChangeNotifier {
     }
     existingPizza = null;
   }
+
+  Future<void> addTopping(
+      String pizzaId, Topping newTopping, Pizza oldPizza) async {
+    final pizzIndex = _items.indexWhere((pizz) => pizz.id == pizzaId);
+    if (pizzIndex >= 0) {
+      final List<Topping> newTopp = [];
+      newTopp.add(newTopping);
+      final url =
+          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$pizzaId.json?auth=$authToken';
+      await http.patch(url,
+          body: json.encode({
+            'title': oldPizza.title,
+            'description': oldPizza.description,
+            'imageUrl': oldPizza.imageUrl,
+            'price': oldPizza.price,
+            'toppings':
+                newTopp.map((t) => {'name': t.name, 'price': t.price}).toList(),
+          }));
+      _items[pizzIndex] = oldPizza;
+      notifyListeners();
+    } else {
+      print('error. something went wrong with adding a topping');
+    }
+  }
 }

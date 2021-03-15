@@ -20,7 +20,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
     Toppings().bacon,
   ];
   Topping _dropdownValue = _toppList.first;
-  List<Topping> pickedValues = [];
+  Topping pickedValues;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,11 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 bigCircle,
                 Positioned(
                   child: CircleButton(
-                    //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet,
+                    //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet with an AddTopping function,
+                    onTap: () {
+                      Provider.of<Pizzas>(context, listen: false)
+                          .addTopping(pizzaId, pickedValues, loadedPizza);
+                    },
                     iconData: Icons.local_pizza,
                   ),
                   top: 120.0,
@@ -79,7 +83,8 @@ class _PizzaCircleState extends State<PizzaCircle> {
             onChanged: (Topping value) {
               setState(() {
                 _dropdownValue = value;
-                pickedValues.insert(0, _dropdownValue);
+                pickedValues = _dropdownValue;
+                print(pickedValues.name);
               });
             },
             items: [
