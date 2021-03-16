@@ -18,6 +18,7 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
+    var products = widget.order.products;
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       height:
@@ -47,82 +48,84 @@ class _OrderItemState extends State<OrderItem> {
                   ? min(widget.order.products.length * 25.0 + 75, 100)
                   : 0,
               child: ListView(
-                children: widget.order.products
-                    .map(
-                      (prod) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            prod.title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context).accentColor,
+                children: [
+                  ...widget.order.products
+                      .map(
+                        (prod) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              prod.title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 7),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Quantity: ${prod.quantity}',
-                                style: TextStyle(
-                                  fontSize: 14,
+                            SizedBox(height: 7),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Quantity: ${prod.quantity}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 7),
-                              Text(
-                                'Price: \$${prod.price}',
-                                style: TextStyle(
-                                  fontSize: 14,
+                                SizedBox(height: 7),
+                                Text(
+                                  'Price: \$${prod.price}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 7),
-                              Text(
-                                'Toppings: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              Text(
-                                  'Name: ${prod.toppings.map((t) => t.name).join(",")}'),
-                              SizedBox(height: 7),
-                              Text(
-                                  'Price: \$${prod.toppings.map((t) => t.price).join(",")}'),
-                              Divider(
-                                height: 8,
-                                thickness: 4,
-                              ),
-                              Text(
-                                'Address: ',
-                                style: TextStyle(
+                                SizedBox(height: 7),
+                                Text(
+                                  'Toppings: ',
+                                  style: TextStyle(
                                     fontSize: 16,
-                                    color: Theme.of(context).accentColor),
-                              ),
-                              SizedBox(height: 10),
-                              Text('City: ${widget.order.address.cityName}'),
-                              SizedBox(height: 5),
-                              Text(
-                                  'Street: ${widget.order.address.streetName}'),
-                              SizedBox(height: 5),
-                              Text(
-                                  'Number: ${widget.order.address.streetNumber}'),
-                              SizedBox(height: 5),
-                              Text(
-                                  'Floor: ${widget.order.address.floorNumber}'),
-                              SizedBox(height: 5),
-                              Text(
-                                  'Apartment: ${widget.order.address.apartment}'),
-                              SizedBox(height: 5),
-                            ],
-                          ),
-                        ],
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                    'Name: ${prod.toppings.map((t) => t.name).join(",")}'),
+                                SizedBox(height: 7),
+                                Text(
+                                    'Price: \$${prod.toppings.map((t) => t.price).join(",")}'),
+                                Divider(
+                                  height: 8,
+                                  thickness: 4,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Address: ',
+                        style: TextStyle(
+                            fontSize: 16, color: Theme.of(context).accentColor),
                       ),
-                    )
-                    .toList(),
+                      SizedBox(height: 10),
+                      Text('City: ${widget.order.address.cityName}'),
+                      SizedBox(height: 5),
+                      Text('Street: ${widget.order.address.streetName}'),
+                      SizedBox(height: 5),
+                      Text('Number: ${widget.order.address.streetNumber}'),
+                      SizedBox(height: 5),
+                      Text('Floor: ${widget.order.address.floorNumber}'),
+                      SizedBox(height: 5),
+                      Text('Apartment: ${widget.order.address.apartment}'),
+                      SizedBox(height: 5),
+                    ],
+                  )
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

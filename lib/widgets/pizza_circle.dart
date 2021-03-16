@@ -46,9 +46,13 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 bigCircle,
                 Positioned(
                   child: CircleButton(
-                    //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet with an AddTopping function,
                     onTap: () {
-                      loadedPizza.toppings.add(pickedValues);
+                      var oldToppings = loadedPizza.toppings;
+                      if (loadedPizza.toppings.length <= 1) {
+                        loadedPizza.toppings.add(pickedValues);
+                      } else {
+                        loadedPizza.toppings == oldToppings;
+                      }
                     },
                     iconData: Icons.local_pizza,
                   ),
@@ -57,7 +61,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 ),
                 Positioned(
                   child: CircleButton(
-                    onTap: () => print("Cool"),
+                    onTap: () {},
                     iconData: Icons.local_pizza,
                   ),
                   top: 120.0,

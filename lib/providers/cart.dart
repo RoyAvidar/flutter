@@ -79,6 +79,10 @@ class Cart with ChangeNotifier {
         );
       });
     } else {
+      for (var i in toppings) {
+        // var prices = toppings[i].price;
+        // price += prices;
+      }
       _items.putIfAbsent(
         pizzaId,
         () => CartItem(
