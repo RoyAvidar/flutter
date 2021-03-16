@@ -93,6 +93,8 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void editTopping(String pizzaId, List<Topping> toppings) {}
+
   void removeItem(String pizzaId) {
     _items.remove(pizzaId);
     notifyListeners();

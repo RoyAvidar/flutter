@@ -48,8 +48,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
                   child: CircleButton(
                     //onTap: add the pickedValues to the loadedPizza but not sending it to cartScreen yet with an AddTopping function,
                     onTap: () {
-                      Provider.of<Pizzas>(context, listen: false)
-                          .editTopping(pizzaId, pickedValues, loadedPizza);
+                      loadedPizza.toppings.add(pickedValues);
                     },
                     iconData: Icons.local_pizza,
                   ),
@@ -85,6 +84,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 _dropdownValue = value;
                 pickedValues = _dropdownValue;
                 print(pickedValues.name);
+                print(pickedValues.price);
               });
             },
             items: [

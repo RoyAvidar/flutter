@@ -1,9 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'pizza.dart';
 import '../models/topping.dart';
 import '../models/http_exception.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Pizzas with ChangeNotifier {
   List<Pizza> _items = [
@@ -186,29 +186,5 @@ class Pizzas with ChangeNotifier {
       throw HttpException('Could not delete pizza.');
     }
     existingPizza = null;
-  }
-
-  Future<void> editTopping(
-      String pizzaId, Topping newTopping, Pizza oldPizza) async {
-    final pizzIndex = _items.indexWhere((pizz) => pizz.id == pizzaId);
-    if (pizzIndex >= 0) {
-      final List<Topping> newTopp = [];
-      newTopp.add(newTopping);
-      final url =
-          'https://flutter-pizza-1c1e7-default-rtdb.firebaseio.com/pizza/$pizzaId.json?auth=$authToken';
-      await http.patch(url,
-          body: json.encode({
-            'title': oldPizza.title,
-            'description': oldPizza.description,
-            'imageUrl': oldPizza.imageUrl,
-            'price': oldPizza.price,
-            'toppings':
-                newTopp.map((t) => {'name': t.name, 'price': t.price}).toList(),
-          }));
-      _items[pizzIndex] = oldPizza;
-      notifyListeners();
-    } else {
-      print('error. something went wrong with adding a topping');
-    }
   }
 }
