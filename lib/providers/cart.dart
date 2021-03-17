@@ -86,9 +86,11 @@ class Cart with ChangeNotifier {
         );
       });
     } else {
-      for (var topp in toppings) {
-        var prices = topp.price;
-        price += prices;
+      if (toppings.length > 1) {
+        for (var topp in toppings) {
+          var prices = topp.price;
+          price += prices;
+        }
       }
       _items.putIfAbsent(
         pizzaId,
