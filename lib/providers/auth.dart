@@ -101,7 +101,6 @@ class Auth with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final response = await http.get(url);
     final fetchedData = json.decode(response.body) as Map<String, dynamic>;
-    print(fetchedData);
     fetchedData.forEach(
       (_userId, value) {
         if (value['admin'] != null) {

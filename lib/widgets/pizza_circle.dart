@@ -28,6 +28,7 @@ class _PizzaCircleState extends State<PizzaCircle> {
     final cart = Provider.of<Cart>(context, listen: false);
     final loadedPizza =
         Provider.of<Pizzas>(context, listen: false).findById(pizzaId);
+    var oldToppings = loadedPizza.toppings;
     Widget bigCircle = Container(
       width: 300,
       height: 300,
@@ -47,18 +48,8 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 Positioned(
                   child: CircleButton(
                     onTap: () {
-                      var oldToppings = loadedPizza.toppings;
                       if (loadedPizza.toppings.length <= 1) {
                         loadedPizza.toppings.add(pickedValues);
-                        // final loadedPizzaPrice = int.parse(
-                        //     loadedPizza.toppings.map((t) => t.price).join(","));
-                        // final pickedValuesPrice = pickedValues.price;
-                        // setState(() {
-                        //   final totalPrice =
-                        //       loadedPizzaPrice + pickedValuesPrice;
-                        //   print(totalPrice);
-                        //   return totalPrice;
-                        // });
                       }
                       loadedPizza.toppings == oldToppings;
                     },
@@ -69,7 +60,12 @@ class _PizzaCircleState extends State<PizzaCircle> {
                 ),
                 Positioned(
                   child: CircleButton(
-                    onTap: () {},
+                    onTap: () {
+                      if (loadedPizza.toppings.length <= 1) {
+                        loadedPizza.toppings.add(pickedValues);
+                        loadedPizza.toppings == oldToppings;
+                      }
+                    },
                     iconData: Icons.local_pizza,
                   ),
                   top: 120.0,
