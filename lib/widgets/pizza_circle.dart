@@ -50,9 +50,17 @@ class _PizzaCircleState extends State<PizzaCircle> {
                       var oldToppings = loadedPizza.toppings;
                       if (loadedPizza.toppings.length <= 1) {
                         loadedPizza.toppings.add(pickedValues);
-                      } else {
-                        loadedPizza.toppings == oldToppings;
+                        // final loadedPizzaPrice = int.parse(
+                        //     loadedPizza.toppings.map((t) => t.price).join(","));
+                        // final pickedValuesPrice = pickedValues.price;
+                        // setState(() {
+                        //   final totalPrice =
+                        //       loadedPizzaPrice + pickedValuesPrice;
+                        //   print(totalPrice);
+                        //   return totalPrice;
+                        // });
                       }
+                      loadedPizza.toppings == oldToppings;
                     },
                     iconData: Icons.local_pizza,
                   ),

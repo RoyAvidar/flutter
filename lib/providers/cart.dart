@@ -7,7 +7,6 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
-
   final List<Topping> toppings;
 
   CartItem({
@@ -36,6 +35,14 @@ class Cart with ChangeNotifier {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
+  }
+
+  double get totalPrice {
+    var totalPrice = 0.0;
+    _items.forEach((key, cartItem) {
+      totalPrice += double.parse(cartItem.toppings.toString()) + cartItem.price;
+    });
+    return totalPrice;
   }
 
   void addSaleItem(
@@ -79,9 +86,9 @@ class Cart with ChangeNotifier {
         );
       });
     } else {
-      for (var i in toppings) {
-        // var prices = toppings[i].price;
-        // price += prices;
+      for (var topp in toppings) {
+        var prices = topp.price;
+        price += prices;
       }
       _items.putIfAbsent(
         pizzaId,
@@ -96,8 +103,6 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
-
-  void editTopping(String pizzaId, List<Topping> toppings) {}
 
   void removeItem(String pizzaId) {
     _items.remove(pizzaId);
