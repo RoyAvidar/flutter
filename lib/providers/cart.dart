@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/topping.dart';
+import '../providers/pizza.dart';
 
 class CartItem {
   final String id;
@@ -80,12 +81,13 @@ class Cart with ChangeNotifier {
         return CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
-          quantity: existingCartItem.quantity + 1,
+          quantity: existingCartItem.quantity,
           price: existingCartItem.price,
           toppings: existingCartItem.toppings,
         );
       });
     } else {
+      print(toppings.length);
       if (toppings.length > 1) {
         for (var topp in toppings) {
           var prices = topp.price;
@@ -103,6 +105,20 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void cahngeQuantity(String pizzaid) {
+    _items.update(
+      pizzaid,
+      (exsitingCartItem) => CartItem(
+        id: exsitingCartItem.id,
+        title: exsitingCartItem.title,
+        quantity: exsitingCartItem.quantity + 1,
+        price: exsitingCartItem.price,
+        toppings: exsitingCartItem.toppings,
+      ),
+    );
     notifyListeners();
   }
 

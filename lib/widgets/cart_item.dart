@@ -28,6 +28,7 @@ class _CartItemState extends State<CartItem> {
   var _expanded = false;
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context, listen: false);
     return Dismissible(
       key: ValueKey(widget.id),
       background: Container(
@@ -61,7 +62,8 @@ class _CartItemState extends State<CartItem> {
               FlatButton(
                 child: Text('Yes'),
                 onPressed: () {
-                  Navigator.of(ctx).pop(true);
+                  cart.removeSingleItem(widget.pizzaId);
+                  Navigator.of(context).pop();
                 },
               )
             ],
@@ -101,27 +103,39 @@ class _CartItemState extends State<CartItem> {
                 ),
               ),
               if (_expanded)
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                      child: Text('Total: ${widget.price * widget.quantity}'),
-                      alignment: Alignment.topLeft,
+                    Column(
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          child:
+                              Text('Total: ${widget.price * widget.quantity}'),
+                          alignment: Alignment.topLeft,
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          child: Text(
+                              'Toppings: ${widget.toppings.map((t) => t.name).join(",")}'),
+                          alignment: Alignment.topLeft,
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                          child: Text(
+                              'Toppings Pirce: \$${widget.toppings.map((t) => t.price).join(",")}'),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 5),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                      child: Text(
-                          'Toppings: ${widget.toppings.map((t) => t.name).join(",")}'),
-                      alignment: Alignment.topLeft,
-                    ),
-                    SizedBox(height: 5),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                      child: Text(
-                          'Toppings Pirce: \$${widget.toppings.map((t) => t.price).join(",")}'),
-                      alignment: Alignment.topLeft,
-                    ),
+                    IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () => cart.cahngeQuantity(widget.pizzaId))
                   ],
                 )
             ],

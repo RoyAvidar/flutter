@@ -28,7 +28,6 @@ class _PizzaCircleState extends State<PizzaCircle> {
     final cart = Provider.of<Cart>(context, listen: false);
     final loadedPizza =
         Provider.of<Pizzas>(context, listen: false).findById(pizzaId);
-    var oldToppings = loadedPizza.toppings;
     Widget bigCircle = Container(
       width: 300,
       height: 300,
@@ -51,7 +50,6 @@ class _PizzaCircleState extends State<PizzaCircle> {
                       if (loadedPizza.toppings.length <= 1) {
                         loadedPizza.toppings.add(pickedValues);
                       }
-                      loadedPizza.toppings == oldToppings;
                     },
                     iconData: Icons.local_pizza,
                   ),
@@ -63,7 +61,6 @@ class _PizzaCircleState extends State<PizzaCircle> {
                     onTap: () {
                       if (loadedPizza.toppings.length <= 1) {
                         loadedPizza.toppings.add(pickedValues);
-                        loadedPizza.toppings == oldToppings;
                       }
                     },
                     iconData: Icons.local_pizza,
