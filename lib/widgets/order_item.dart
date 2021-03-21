@@ -18,7 +18,6 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
-    var products = widget.order.products;
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       height:
